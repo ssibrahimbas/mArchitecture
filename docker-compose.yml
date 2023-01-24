@@ -1,0 +1,25 @@
+version: "3.8"
+name: "clean-boilerplate"
+services:
+  example:
+    build:
+      context: .
+      dockerfile: ./services.boilerplate/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      PROTOCOL: http
+      MYSQL_ADDRESS: ${MYSQL_ADDRESS}
+      MYSQL_USERNAME: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 3000
+      CORS_ALLOWED_ORIGINS: "*"
+      CORS_ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
+      CORS_ALLOWED_HEADERS: Content-Type,Authorization
+      CORS_ALLOW_CREDENTIALS: true
+    networks:
+      - default

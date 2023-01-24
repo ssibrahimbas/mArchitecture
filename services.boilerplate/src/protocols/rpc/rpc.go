@@ -7,6 +7,7 @@ import (
 
 type Server struct {
 	app app.Application
+	example.UnsafeExampleServiceServer
 }
 
 func New(app app.Application) example.ExampleServiceServer {
