@@ -14,7 +14,7 @@ type ListExampleQuery struct {
 }
 
 type ListExampleResult struct {
-	Examples []example.Example
+	Examples []*example.Example
 }
 
 type ListExampleHandler decorator.QueryHandler[ListExampleQuery, ListExampleResult]

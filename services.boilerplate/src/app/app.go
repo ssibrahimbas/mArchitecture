@@ -6,16 +6,16 @@ import (
 )
 
 type Application struct {
-	Commands commands
-	Queries  queries
+	Commands Commands
+	Queries  Queries
 }
 
-type commands struct {
+type Commands struct {
 	CreateExample command.CreateExampleHandler
 	UpdateExample command.UpdateExampleHandler
 }
 
-type queries struct {
+type Queries struct {
 	ListExample query.ListExampleHandler
 	GetExample  query.GetExampleHandler
 }

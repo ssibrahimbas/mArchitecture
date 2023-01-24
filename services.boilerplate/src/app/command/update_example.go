@@ -28,7 +28,7 @@ func NewUpdateExampleHandler(exampleRepo example.Repository, logger *logrus.Entr
 }
 
 func (h updateExampleHandler) Handle(ctx context.Context, command UpdateExampleCommand) error {
-	example := example.Example{
+	example := &example.Example{
 		Key:   command.Key,
 		Value: command.Value,
 	}
