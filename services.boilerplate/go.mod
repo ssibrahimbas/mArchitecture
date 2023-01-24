@@ -6,13 +6,38 @@ replace clean-boilerplate/shared => ../services.shared
 
 require (
 	clean-boilerplate/shared v0.0.0-00010101000000-000000000000
+	github.com/gofiber/fiber/v2 v2.41.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/pkg/errors v0.9.1
 	gitlab.com/ssibrahimbas/sqb.go v0.0.0-20230123070951-1c15112715d6
 )
 
 require (
+	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
+	github.com/klauspost/compress v1.15.15 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mattn/go-runewidth v0.0.14 // indirect
+	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
+	github.com/nxadm/tail v1.4.8 // indirect
+	github.com/rivo/uniseg v0.4.3 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
+	github.com/valyala/fasthttp v1.44.0 // indirect
+	github.com/valyala/tcplisten v1.0.0 // indirect
+	github.com/x-cray/logrus-prefixed-formatter v0.5.2 // indirect
+	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
+	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/term v0.4.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
+	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
+	google.golang.org/grpc v1.52.0 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
+)
+
+require (
 	github.com/go-sql-driver/mysql v1.7.0
-	github.com/sirupsen/logrus v1.9.0 // indirect
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
+	github.com/sirupsen/logrus v1.9.0
+	golang.org/x/sys v0.4.0 // indirect
 )
