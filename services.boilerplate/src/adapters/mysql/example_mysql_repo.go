@@ -108,7 +108,7 @@ func New(cnf config.MySQL) (*sqlx.DB, error) {
 	config.DBName = cnf.Database
 	config.ParseTime = true
 
-	db, err := sqlx.Open("mysql", config.FormatDSN())
+	db, err := sqlx.Connect("mysql", config.FormatDSN())
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to open mysql connection")
 	}
