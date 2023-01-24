@@ -10,7 +10,7 @@ type Server struct {
 }
 
 func New(app app.Application) example.ExampleServiceServer {
-	return &Server{
+	return Server{
 		app: app,
 	}
 }
