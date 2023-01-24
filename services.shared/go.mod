@@ -1,4 +1,4 @@
-module clean-boilerplate
+module clean-boilerplate/shared
 
 go 1.19
 
