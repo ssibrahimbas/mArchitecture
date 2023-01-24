@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"clean-boilerplate/shared/i18n"
 	"clean-boilerplate/shared/server/http/error_handler"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,19 +12,30 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func RunServer(host string, port int, createHandler func(router fiber.Router) fiber.Router) {
-	RunServerOnAddr(fmt.Sprintf("%v:%v", host, port), createHandler)
+type Config struct {
+	Host          string
+	Port          int
+	CreateHandler func(router fiber.Router) fiber.Router
+	I18n          *i18n.I18n
 }
 
-func RunServerOnAddr(addr string, createHandler func(router fiber.Router) fiber.Router) {
+func RunServer(cfg Config) {
+	addr := fmt.Sprintf("%v:%v", cfg.Host, cfg.Port)
+	RunServerOnAddr(addr, cfg)
+}
+
+func RunServerOnAddr(addr string, cfg Config) {
 	app := fiber.New(fiber.Config{
-		ErrorHandler: error_handler.New(),
-		JSONEncoder:  json.Marshal,
-		JSONDecoder:  json.Unmarshal,
+		ErrorHandler: error_handler.New(error_handler.Config{
+			DfMsgKey: "error_internal_server_error",
+			I18n:     cfg.I18n,
+		}),
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
 	})
 
 	group := app.Group("/api")
-	createHandler(group)
+	cfg.CreateHandler(group)
 
 	logrus.Infof("Starting server on %v", addr)
 	if err := app.Listen(addr); err != nil {

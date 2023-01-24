@@ -7,6 +7,12 @@ type MySQL struct {
 	Database string `env:"MYSQL_DATABASE" envDefault:"boilerplate"`
 }
 
+type I18n struct {
+	Fallback string `env:"I18N_FALLBACK_LANGUAGE" envDefault:"en"`
+	Dir      string `env:"I18N_DIR" envDefault:"./src/locales"`
+	Locales  string `env:"I18N_LOCALES" envDefault:"en,tr"`
+}
+
 type Server struct {
 	Host string `env:"SERVER_HOST" envDefault:"localhost"`
 	Port int    `env:"SERVER_PORT" envDefault:"3000"`
@@ -24,4 +30,5 @@ type App struct {
 	MySQL    MySQL
 	Server   Server
 	Cors     Cors
+	I18n     I18n
 }

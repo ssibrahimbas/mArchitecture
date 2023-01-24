@@ -7,8 +7,14 @@ import (
 	"clean-boilerplate/shared/genproto/example"
 )
 
-func NewHttp(app app.Application) http.Server {
-	return http.New(app)
+type HttpConfig http.Config
+
+func NewHttp(config HttpConfig) http.Server {
+	return http.New(http.Config{
+		App:       config.App,
+		I18n:      config.I18n,
+		Validator: config.Validator,
+	})
 }
 
 func NewRpc(app app.Application) example.ExampleServiceServer {

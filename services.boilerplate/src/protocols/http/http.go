@@ -2,17 +2,29 @@ package http
 
 import (
 	"clean-boilerplate/boilerplate/src/app"
+	"clean-boilerplate/shared/i18n"
+	"clean-boilerplate/shared/validator"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type Server struct {
-	app app.Application
+	app       app.Application
+	i18n      i18n.I18n
+	validator validator.Validator
 }
 
-func New(app app.Application) Server {
+type Config struct {
+	App       app.Application
+	I18n      i18n.I18n
+	Validator validator.Validator
+}
+
+func New(config Config) Server {
 	return Server{
-		app: app,
+		app:       config.App,
+		i18n:      config.I18n,
+		validator: config.Validator,
 	}
 }
 
