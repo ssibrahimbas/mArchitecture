@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	"context"
 	"database/sql"
@@ -94,13 +95,13 @@ func (r *exampleRepo) Count(ctx context.Context) (int, error) {
 	return count, nil
 }
 
-func New() (*sqlx.DB, error) {
+func New(cnf config.MySQL) (*sqlx.DB, error) {
 	config := mysql.NewConfig()
 	config.Net = "tcp"
-	config.Addr = "localhost:3306"
-	config.User = "root"
-	config.Passwd = "root"
-	config.DBName = "clean_boilerplate"
+	config.Addr = cnf.Address
+	config.User = cnf.Username
+	config.Passwd = cnf.Password
+	config.DBName = cnf.Database
 	config.ParseTime = true
 
 	db, err := sqlx.Open("mysql", config.FormatDSN())

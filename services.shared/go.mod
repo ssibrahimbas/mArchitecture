@@ -4,8 +4,10 @@ go 1.19
 
 require (
 	github.com/gofiber/fiber/v2 v2.41.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/sirupsen/logrus v1.9.0
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
+	go.deanishe.net/env v0.5.1
 	google.golang.org/grpc v1.52.0
 	google.golang.org/protobuf v1.28.1
 )

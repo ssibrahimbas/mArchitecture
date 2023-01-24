@@ -5,6 +5,7 @@ import (
 	"clean-boilerplate/boilerplate/src/app"
 	"clean-boilerplate/boilerplate/src/app/command"
 	"clean-boilerplate/boilerplate/src/app/query"
+	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	"clean-boilerplate/shared/metrics"
 	"context"
@@ -12,8 +13,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func NewApplication(ctx context.Context) app.Application {
-	sqlDb, err := mysql.New()
+func NewApplication(ctx context.Context, config config.App) app.Application {
+	sqlDb, err := mysql.New(config.MySQL)
 	if err != nil {
 		panic(err)
 	}
