@@ -1,6 +1,23 @@
 version: "3.8"
 name: "clean-boilerplate"
 services:
+  mysql:
+    image: mariadb:10.5.8
+    container_name: mysql
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USERNAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./__persist__/mysql:/var/lib/mysql
+    networks:
+      - default
   example:
     build:
       context: .
@@ -21,5 +38,10 @@ services:
       CORS_ALLOWED_METHODS: GET,POST,PUT,DELETE,OPTIONS
       CORS_ALLOWED_HEADERS: Content-Type,Authorization
       CORS_ALLOW_CREDENTIALS: true
+      I18N_FALLBACK_LANGUAGE: en
+      I18N_DIR: ./src/locales
+      I18N_LOCALES: en,tr
     networks:
       - default
+    depends_on:
+      - mysql

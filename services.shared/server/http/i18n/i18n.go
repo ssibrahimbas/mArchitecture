@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetLanguagesInContext(i *i18nRoot.I18n, c *fiber.Ctx) (string, string) {
+func GetLanguagesInContext(i i18nRoot.I18n, c *fiber.Ctx) (string, string) {
 	l := c.Query("lang")
 	a := c.Get("Accept-Language", i.Fallback)
 	if l == "" {
@@ -15,7 +15,7 @@ func GetLanguagesInContext(i *i18nRoot.I18n, c *fiber.Ctx) (string, string) {
 	return l, a
 }
 
-func New(i *i18nRoot.I18n) fiber.Handler {
+func New(i i18nRoot.I18n) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		l, a := GetLanguagesInContext(i, c)
 		c.Locals("lang", l)

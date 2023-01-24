@@ -14,6 +14,7 @@ func NewHttp(config HttpConfig) http.Server {
 		App:       config.App,
 		I18n:      config.I18n,
 		Validator: config.Validator,
+		Context:   config.Context,
 	})
 }
 

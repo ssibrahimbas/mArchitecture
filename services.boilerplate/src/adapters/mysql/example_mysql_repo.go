@@ -75,14 +75,18 @@ func (r *exampleRepo) Delete(ctx context.Context, key string) error {
 	return nil
 }
 
-func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*example.Example, error) {
-	var es []*example.Example
+func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*example.Example, int, error) {
+	var examples []*example.Example
 	query := sqb_go.QB.Table("example").Limit(limit).Offset(offset).Get()
-	err := r.db.SelectContext(ctx, &es, query)
+	err := r.db.SelectContext(ctx, &examples, query)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to list examples")
+		return nil, 0, errors.Wrap(err, "failed to list examples")
 	}
-	return es, nil
+	total, err := r.Count(ctx)
+	if err != nil {
+		return nil, 0, errors.Wrap(err, "failed to count examples")
+	}
+	return examples, total, nil
 }
 
 func (r *exampleRepo) Count(ctx context.Context) (int, error) {

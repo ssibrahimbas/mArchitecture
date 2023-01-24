@@ -3,7 +3,6 @@ package result
 type Result struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
-	Code    int    `json:"code,omitempty"`
 }
 
 type DetailResult struct {
@@ -20,30 +19,46 @@ func (r *DetailResult) Error() string {
 	return r.Message
 }
 
-func Success(m string, c int) *Result {
+func Success(m string, c ...int) *Result {
+	code := 200
+	if len(c) > 0 {
+		code = c[0]
+	}
 	return &Result{
 		Message: m,
-		Code:    c,
+		Status:  code,
 	}
 }
 
-func Error(m string, c int) *Result {
+func Error(m string, c ...int) *Result {
+	code := 400
+	if len(c) > 0 {
+		code = c[0]
+	}
 	return &Result{
 		Message: m,
-		Code:    c,
+		Status:  code,
 	}
 }
 
-func SuccessDetail(m string, d any, c int) *DetailResult {
+func SuccessDetail(m string, d any, c ...int) *DetailResult {
+	code := 200
+	if len(c) > 0 {
+		code = c[0]
+	}
 	return &DetailResult{
 		Detail: d,
-		Result: Result{Message: m, Code: c},
+		Result: Result{Message: m, Status: code},
 	}
 }
 
-func ErrorDetail(m string, d any, c int) *DetailResult {
+func ErrorDetail(m string, d any, c ...int) *DetailResult {
+	code := 400
+	if len(c) > 0 {
+		code = c[0]
+	}
 	return &DetailResult{
 		Detail: d,
-		Result: Result{Message: m, Code: c},
+		Result: Result{Message: m,Status: code},
 	}
 }

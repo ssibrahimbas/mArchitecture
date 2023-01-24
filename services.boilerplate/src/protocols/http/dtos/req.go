@@ -6,8 +6,8 @@ type CreateExampleRequest struct {
 }
 
 type ListExampleRequest struct {
-	Offset *int `query:"offset" validate:"required"`
-	Limit  *int `query:"limit" validate:"required"`
+	Offset *int `query:"offset"  validate:"omitempty,gt=0"`
+	Limit  *int `query:"limit"  validate:"omitempty,gt=0"`
 }
 
 type GetExampleRequest struct {
@@ -17,4 +17,15 @@ type GetExampleRequest struct {
 type UpdateExampleRequest struct {
 	Key   string `param:"key" validate:"required"`
 	Value string `json:"value" validate:"required"`
+}
+
+func (r *ListExampleRequest) Default() {
+	if r.Offset == nil {
+		r.Offset = new(int)
+		*r.Offset = 0
+	}
+	if r.Limit == nil {
+		r.Limit = new(int)
+		*r.Limit = 10
+	}
 }

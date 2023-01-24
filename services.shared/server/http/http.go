@@ -4,10 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/shared/i18n"
 	"clean-boilerplate/shared/server/http/error_handler"
+	i18nHttp "clean-boilerplate/shared/server/http/i18n"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/sirupsen/logrus"
 )
@@ -17,6 +21,7 @@ type Config struct {
 	Port          int
 	CreateHandler func(router fiber.Router) fiber.Router
 	I18n          *i18n.I18n
+	Cors          config.Cors
 }
 
 func RunServer(cfg Config) {
@@ -27,14 +32,15 @@ func RunServer(cfg Config) {
 func RunServerOnAddr(addr string, cfg Config) {
 	app := fiber.New(fiber.Config{
 		ErrorHandler: error_handler.New(error_handler.Config{
-			DfMsgKey: "error_internal_server_error",
-			I18n:     cfg.I18n,
+			//DfMsgKey: "error_internal_server_error",
+			I18n: cfg.I18n,
 		}),
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
 	})
 
 	group := app.Group("/api")
+	setGlobalMiddlewares(app, cfg)
 	cfg.CreateHandler(group)
 
 	logrus.Infof("Starting server on %v", addr)
@@ -42,9 +48,16 @@ func RunServerOnAddr(addr string, cfg Config) {
 		logrus.WithError(err).Panic("Unable to start HTTP server")
 	}
 
-	setGlobalMiddlewares(app)
 }
 
-func setGlobalMiddlewares(router fiber.Router) {
+func setGlobalMiddlewares(router fiber.Router, cfg Config) {
 	router.Use(recover.New())
+	router.Use(i18nHttp.New(*cfg.I18n))
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     cfg.Cors.AllowedOrigins,
+		AllowHeaders:     cfg.Cors.AllowedHeaders,
+		AllowMethods:     cfg.Cors.AllowedMethods,
+		AllowCredentials: cfg.Cors.AllowCredentials,
+	}))
+	router.Use(compress.New(compress.Config{}))
 }

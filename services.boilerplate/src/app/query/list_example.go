@@ -15,6 +15,7 @@ type ListExampleQuery struct {
 
 type ListExampleResult struct {
 	Examples []*example.Example
+	Total    int
 }
 
 type ListExampleHandler decorator.QueryHandler[ListExampleQuery, ListExampleResult]
@@ -32,10 +33,10 @@ func NewListExampleHandler(exampleRepo example.Repository, logger *logrus.Entry,
 }
 
 func (h listExampleHandler) Handle(ctx context.Context, query ListExampleQuery) (ListExampleResult, error) {
-	example, err := h.exampleRepo.List(ctx, query.Limit, query.Offset)
+	example, total, err := h.exampleRepo.List(ctx, query.Limit, query.Offset)
 	if err != nil {
 		return ListExampleResult{}, err
 	}
 
-	return ListExampleResult{Examples: example}, nil
+	return ListExampleResult{Examples: example, Total: total}, nil
 }

@@ -8,9 +8,9 @@ type MySQL struct {
 }
 
 type I18n struct {
-	Fallback string `env:"I18N_FALLBACK_LANGUAGE" envDefault:"en"`
-	Dir      string `env:"I18N_DIR" envDefault:"./src/locales"`
-	Locales  string `env:"I18N_LOCALES" envDefault:"en,tr"`
+	Fallback string   `env:"I18N_FALLBACK_LANGUAGE" envDefault:"en"`
+	Dir      string   `env:"I18N_DIR" envDefault:"./src/locales"`
+	Locales  []string `env:"I18N_LOCALES" envDefault:"en,tr"`
 }
 
 type Server struct {
@@ -19,10 +19,10 @@ type Server struct {
 }
 
 type Cors struct {
-	AllowedOrigins   []string `env:"CORS_ALLOWED_ORIGINS" envSeparator:"," envDefault:"*"`
-	AllowedMethods   []string `env:"CORS_ALLOWED_METHODS" envSeparator:"," envDefault:"GET,POST,PUT,DELETE,OPTIONS"`
-	AllowedHeaders   []string `env:"CORS_ALLOWED_HEADERS" envSeparator:"," envDefault:"*"`
-	AllowCredentials bool     `env:"CORS_ALLOW_CREDENTIALS" envDefault:"true"`
+	AllowedOrigins   string `env:"CORS_ALLOWED_ORIGINS" envDefault:"*"`
+	AllowedMethods   string `env:"CORS_ALLOWED_METHODS" envDefault:"GET,POST,PUT,DELETE,OPTIONS"`
+	AllowedHeaders   string `env:"CORS_ALLOWED_HEADERS" envDefault:"*"`
+	AllowCredentials bool   `env:"CORS_ALLOW_CREDENTIALS" envDefault:"true"`
 }
 
 type App struct {

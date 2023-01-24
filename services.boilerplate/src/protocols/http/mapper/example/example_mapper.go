@@ -1,0 +1,79 @@
+package example_mapper
+
+import (
+	"clean-boilerplate/boilerplate/src/app/command"
+	"clean-boilerplate/boilerplate/src/app/query"
+	"clean-boilerplate/boilerplate/src/domain/example"
+	"clean-boilerplate/boilerplate/src/protocols/http/dtos"
+)
+
+type Mapper interface {
+	ReqToGetExample(d *dtos.GetExampleRequest) query.GetExampleQuery
+	GetExampleQueryToRes(d *query.GetExampleResult) dtos.GetExampleResponse
+	ReqToListExample(d *dtos.ListExampleRequest) query.ListExampleQuery
+	ListExampleQueryToRes(d *query.ListExampleResult) dtos.ListExampleResponse
+	ListExampleQueryToResItems(d []*example.Example) []example.Example
+	ListExampleQueryToResItem(d *example.Example) example.Example
+	ReqToCreateExample(d *dtos.CreateExampleRequest) command.CreateExampleCommand
+	ReqToUpdateExample(d *dtos.UpdateExampleRequest) command.UpdateExampleCommand
+}
+
+type mapper struct{}
+
+func New() Mapper {
+	return &mapper{}
+}
+
+func (m *mapper) ReqToGetExample(d *dtos.GetExampleRequest) query.GetExampleQuery {
+	return query.GetExampleQuery{
+		Key: d.Key,
+	}
+}
+
+func (m *mapper) GetExampleQueryToRes(d *query.GetExampleResult) dtos.GetExampleResponse {
+	return dtos.GetExampleResponse{
+		Key: d.Key,
+	}
+}
+
+func (m *mapper) ReqToListExample(d *dtos.ListExampleRequest) query.ListExampleQuery {
+	return query.ListExampleQuery{
+		Offset: *d.Offset,
+		Limit:  *d.Limit,
+	}
+}
+
+func (m *mapper) ListExampleQueryToRes(d *query.ListExampleResult) dtos.ListExampleResponse {
+	return dtos.ListExampleResponse{
+		Total: d.Total,
+		Items: m.ListExampleQueryToResItems(d.Examples),
+	}
+}
+
+func (m *mapper) ListExampleQueryToResItems(d []*example.Example) []example.Example {
+	items := make([]example.Example, len(d))
+	for i, item := range d {
+		items[i] = m.ListExampleQueryToResItem(item)
+	}
+	return items
+}
+
+func (m *mapper) ListExampleQueryToResItem(d *example.Example) example.Example {
+	return example.Example{
+		Key: d.Key,
+	}
+}
+
+func (m *mapper) ReqToCreateExample(d *dtos.CreateExampleRequest) command.CreateExampleCommand {
+	return command.CreateExampleCommand{
+		Key:   d.Key,
+		Value: d.Value,
+	}
+}
+
+func (m *mapper) ReqToUpdateExample(d *dtos.UpdateExampleRequest) command.UpdateExampleCommand {
+	return command.UpdateExampleCommand{
+		Key:   d.Key,
+		Value: d.Value,
+	}
+}

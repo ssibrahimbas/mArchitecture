@@ -13,6 +13,8 @@ ENV PORT 8080
 WORKDIR /app
 
 COPY --from=builder /boilerplate/main .
+COPY --from=builder /boilerplate/src/locales ./src/locales
+
 
 EXPOSE $PORT
 

@@ -18,47 +18,62 @@ import (
 	"google.golang.org/grpc"
 )
 
+type loader struct {
+	app    app.Application
+	config config.App
+	i18n   *i18n.I18n
+	ctx    context.Context
+}
+
 func main() {
 	logs.Init()
 	ctx := context.Background()
 	config := config.App{}
 	env.Load(&config)
 	i18n := i18n.New(config.I18n.Fallback)
-	i18n.Load(config.I18n.Dir, config.I18n.Locales)
+	i18n.Load(config.I18n.Dir, config.I18n.Locales...)
 	app := service.NewApplication(ctx, config)
-	loadServer(app, config, i18n)
+	l := loader{
+		app:    app,
+		config: config,
+		i18n:   i18n,
+		ctx:    ctx,
+	}
+	loadServer(l)
 
 }
 
-func loadRpc(app app.Application, config config.App) {
-	rpc.RunServer(config.Server.Port, func(server *grpc.Server) {
-		svc := protocols.NewRpc(app)
+func loadRpc(l loader) {
+	rpc.RunServer(l.config.Server.Port, func(server *grpc.Server) {
+		svc := protocols.NewRpc(l.app)
 		example.RegisterExampleServiceServer(server, svc)
 	})
 }
 
-func loadHttp(app app.Application, config config.App, i18n *i18n.I18n) {
+func loadHttp(l loader) {
 	http.RunServer(http.Config{
-		Host: config.Server.Host,
-		Port: config.Server.Port,
-		I18n: i18n,
+		Host: l.config.Server.Host,
+		Port: l.config.Server.Port,
+		I18n: l.i18n,
+		Cors: l.config.Cors,
 		CreateHandler: func(router fiber.Router) fiber.Router {
-			val := validator.New(i18n)
+			val := validator.New(l.i18n)
 			val.ConnectCustom()
 			val.RegisterTagName()
 			return protocols.NewHttp(protocols.HttpConfig{
-				App:       app,
-				I18n:      *i18n,
+				App:       l.app,
+				I18n:      *l.i18n,
 				Validator: *val,
+				Context:   l.ctx,
 			}).Load(router)
 		},
 	})
 }
 
-func loadServer(app app.Application, config config.App, i18n *i18n.I18n) {
-	if config.Protocol == "rpc" {
-		loadRpc(app, config)
+func loadServer(l loader) {
+	if l.config.Protocol == "rpc" {
+		loadRpc(l)
 		return
 	}
-	loadHttp(app, config, i18n)
+	loadHttp(l)
 }
