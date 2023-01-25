@@ -1,20 +1,19 @@
 package service
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/mysql"
+	mysql_example "clean-boilerplate/boilerplate/src/adapters/mysql/example"
 	"clean-boilerplate/boilerplate/src/app"
 	"clean-boilerplate/boilerplate/src/app/command"
 	"clean-boilerplate/boilerplate/src/app/query"
 	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	"clean-boilerplate/shared/metrics"
-	"context"
 
 	"github.com/sirupsen/logrus"
 )
 
-func NewApplication(ctx context.Context, config config.App) app.Application {
-	sqlDb, err := mysql.New(config.MySQL)
+func NewApplication(config config.App) app.Application {
+	sqlDb, err := mysql_example.New(config.MySQLExample)
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +30,7 @@ func NewApplication(ctx context.Context, config config.App) app.Application {
 		panic(err)
 	}
 
-	exampleRepo := mysql.NewExampleRepo(sqlDb, exampleFactory)
+	exampleRepo := mysql_example.NewExampleRepo(sqlDb, exampleFactory)
 
 	logger := logrus.NewEntry(logrus.StandardLogger())
 	metricsClient := metrics.NoOp{}

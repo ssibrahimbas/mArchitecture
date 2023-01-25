@@ -1,7 +1,7 @@
-package mysql
+package mysql_example
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/mysql/entity"
+	"clean-boilerplate/boilerplate/src/adapters/mysql/example/entity"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	"clean-boilerplate/shared/i18n"
 )

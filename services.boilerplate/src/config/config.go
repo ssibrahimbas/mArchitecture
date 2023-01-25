@@ -1,10 +1,10 @@
 package config
 
-type MySQL struct {
-	Address  string `env:"MYSQL_ADDRESS" envDefault:"localhost:3306"`
-	Username string `env:"MYSQL_USERNAME" envDefault:"root"`
-	Password string `env:"MYSQL_PASSWORD" envDefault:"root"`
-	Database string `env:"MYSQL_DATABASE" envDefault:"boilerplate"`
+type MySQLExample struct {
+	Address  string `env:"EXAMPLE_MYSQL_ADDRESS" envDefault:"localhost:3306"`
+	Username string `env:"EXAMPLE_MYSQL_USERNAME" envDefault:"root"`
+	Password string `env:"EXAMPLE_MYSQL_PASSWORD" envDefault:"root"`
+	Database string `env:"EXAMPLE_MYSQL_DATABASE" envDefault:"boilerplate"`
 }
 
 type I18n struct {
@@ -26,9 +26,9 @@ type Cors struct {
 }
 
 type App struct {
-	Protocol string `env:"PROTOCOL" envDefault:"http"`
-	MySQL    MySQL
-	Server   Server
-	Cors     Cors
-	I18n     I18n
+	Protocol     string `env:"PROTOCOL" envDefault:"http"`
+	MySQLExample MySQLExample
+	Server       Server
+	Cors         Cors
+	I18n         I18n
 }

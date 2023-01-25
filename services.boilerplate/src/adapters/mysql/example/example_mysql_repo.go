@@ -1,7 +1,7 @@
-package mysql
+package mysql_example
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/mysql/entity"
+	"clean-boilerplate/boilerplate/src/adapters/mysql/example/entity"
 	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	mysql_migration "clean-boilerplate/shared/migration/mysql"
@@ -32,7 +32,7 @@ func NewExampleRepo(db *sqlx.DB, exampleFactory example.Factory) example.Reposit
 	}
 }
 
-func New(cnf config.MySQL) (*sqlx.DB, error) {
+func New(cnf config.MySQLExample) (*sqlx.DB, error) {
 	config := mysql.NewConfig()
 	config.Net = "tcp"
 	config.Addr = cnf.Address

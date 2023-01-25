@@ -32,7 +32,7 @@ func main() {
 	env.Load(&config)
 	i18n := i18n.New(config.I18n.Fallback)
 	i18n.Load(config.I18n.Dir, config.I18n.Locales...)
-	app := service.NewApplication(ctx, config)
+	app := service.NewApplication(config)
 	l := loader{
 		app:    app,
 		config: config,
