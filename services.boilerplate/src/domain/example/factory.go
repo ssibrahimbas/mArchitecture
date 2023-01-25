@@ -72,29 +72,24 @@ func (f Factory) Validate(e *Example) *i18n.I18nError {
 
 func (f Factory) validateField(field string) *i18n.I18nError {
 	if len(field) < f.fc.MinFieldLength {
-		//return errors.Errorf("field length must be greater than or equal to %d", f.fc.MinFieldLength)
-		return i18n.NewError(I18nMessages.Field_Too_Short, i18n.P{"min": f.fc.MinFieldLength})
+		return i18n.NewError(I18nMessages.Field_Too_Short, i18n.P{"Min": f.fc.MinFieldLength})
 	}
 	if len(field) > f.fc.MaxFieldLength {
-		//return errors.Errorf("field length must be less than or equal to %d", f.fc.MaxFieldLength)
-		return i18n.NewError(I18nMessages.Field_Too_long, i18n.P{"max": f.fc.MaxFieldLength})
+		return i18n.NewError(I18nMessages.Field_Too_long, i18n.P{"Max": f.fc.MaxFieldLength})
 	}
 	return nil
 }
 
 func (f Factory) validateContent(content string) *i18n.I18nError {
 	if len(content) < f.fc.MinContentLength {
-		//return errors.Errorf("content length must be greater than or equal to %d", f.fc.MinContentLength)
-		return i18n.NewError(I18nMessages.Content_Too_Short, i18n.P{"min": f.fc.MinContentLength})
+		return i18n.NewError(I18nMessages.Content_Too_Short, i18n.P{"Min": f.fc.MinContentLength})
 	}
 	if len(content) > f.fc.MaxContentLength {
-		//return errors.Errorf("content length must be less than or equal to %d", f.fc.MaxContentLength)
-		return i18n.NewError(I18nMessages.Content_Too_long, i18n.P{"max": f.fc.MaxContentLength})
+		return i18n.NewError(I18nMessages.Content_Too_long, i18n.P{"Max": f.fc.MaxContentLength})
 	}
 	return nil
 }
 
 func (f Factory) NewNotFoundError(key string) *i18n.I18nError {
-	//return errors.Errorf("example with key %q not found", key)
-	return i18n.NewError(I18nMessages.Not_Found, i18n.P{"key": key})
+	return i18n.NewError(I18nMessages.Not_Found, i18n.P{"Key": key})
 }
