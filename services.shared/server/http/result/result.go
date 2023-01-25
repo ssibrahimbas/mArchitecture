@@ -1,14 +1,15 @@
 package result
 
+import "github.com/gofiber/fiber/v2"
+
 type Result struct {
 	Status  int    `json:"status"`
 	Message string `json:"message"`
 }
 
 type DetailResult struct {
-	Status int `json:"status"`
-	Detail any `json:"detail"`
 	Result
+	Detail any `json:"detail"`
 }
 
 func (r *Result) Error() string {
@@ -20,8 +21,8 @@ func (r *DetailResult) Error() string {
 }
 
 func Success(m string, c ...int) *Result {
-	code := 200
-	if len(c) > 0 {
+	code := fiber.StatusOK
+	if len(c) > 0 && c[0] != 0 {
 		code = c[0]
 	}
 	return &Result{
@@ -31,8 +32,8 @@ func Success(m string, c ...int) *Result {
 }
 
 func Error(m string, c ...int) *Result {
-	code := 400
-	if len(c) > 0 {
+	code := fiber.StatusBadRequest
+	if len(c) > 0 && c[0] != 0 {
 		code = c[0]
 	}
 	return &Result{
@@ -42,8 +43,8 @@ func Error(m string, c ...int) *Result {
 }
 
 func SuccessDetail(m string, d any, c ...int) *DetailResult {
-	code := 200
-	if len(c) > 0 {
+	code := fiber.StatusOK
+	if len(c) > 0 && c[0] != 0 {
 		code = c[0]
 	}
 	return &DetailResult{
@@ -53,12 +54,12 @@ func SuccessDetail(m string, d any, c ...int) *DetailResult {
 }
 
 func ErrorDetail(m string, d any, c ...int) *DetailResult {
-	code := 400
-	if len(c) > 0 {
+	code := fiber.StatusBadRequest
+	if len(c) > 0 && c[0] != 0 {
 		code = c[0]
 	}
 	return &DetailResult{
 		Detail: d,
-		Result: Result{Message: m,Status: code},
+		Result: Result{Message: m, Status: code},
 	}
 }

@@ -72,24 +72,24 @@ func (f Factory) Validate(e *Example) *i18n.I18nError {
 
 func (f Factory) validateField(field string) *i18n.I18nError {
 	if len(field) < f.fc.MinFieldLength {
-		return i18n.NewError(I18nMessages.Field_Too_Short, f.fc.MinFieldLength)
+		return i18n.NewError(I18nMessages.Field_Too_Short, i18n.P{"Param": f.fc.MinFieldLength})
 	}
 	if len(field) > f.fc.MaxFieldLength {
-		return i18n.NewError(I18nMessages.Field_Too_long, f.fc.MaxFieldLength)
+		return i18n.NewError(I18nMessages.Field_Too_long, i18n.P{"Param": f.fc.MaxFieldLength})
 	}
 	return nil
 }
 
 func (f Factory) validateContent(content string) *i18n.I18nError {
 	if len(content) < f.fc.MinContentLength {
-		return i18n.NewError(I18nMessages.Content_Too_Short, f.fc.MinContentLength)
+		return i18n.NewError(I18nMessages.Content_Too_Short, i18n.P{"Param": f.fc.MinContentLength})
 	}
 	if len(content) > f.fc.MaxContentLength {
-		return i18n.NewError(I18nMessages.Content_Too_long, f.fc.MaxContentLength)
+		return i18n.NewError(I18nMessages.Content_Too_long, i18n.P{"Param": f.fc.MaxContentLength})
 	}
 	return nil
 }
 
 func (f Factory) NewNotFoundError(key string) *i18n.I18nError {
-	return i18n.NewError(I18nMessages.Not_Found, key)
+	return i18n.NewError(I18nMessages.Not_Found, i18n.P{"Param": key})
 }
