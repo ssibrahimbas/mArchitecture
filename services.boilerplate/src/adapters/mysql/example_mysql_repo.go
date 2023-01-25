@@ -99,7 +99,7 @@ func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*examp
 
 func (r *exampleRepo) Count(ctx context.Context) (int, error) {
 	var count int
-	query := sqb_go.QB.Table("example").Count("Id", "count").Get()
+	query := sqb_go.QB.Table("example").Count("uuid", "count").Get()
 	err := r.db.GetContext(ctx, &count, query)
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to count examples")
