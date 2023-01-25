@@ -1,12 +1,15 @@
 package mysql
 
 import (
+	"clean-boilerplate/boilerplate/src/adapters/mysql/entity"
 	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
+	mysql_migration "clean-boilerplate/shared/migration/mysql"
 	"context"
 	"database/sql"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	sqb_go "gitlab.com/ssibrahimbas/sqb.go"
@@ -32,7 +35,7 @@ func NewExampleRepo(db *sqlx.DB, exampleFactory example.Factory) example.Reposit
 
 func (r *exampleRepo) Get(ctx context.Context, key string) (*example.Example, error) {
 	e := example.Example{}
-	query := sqb_go.QB.Table("example").Where("key", "=", key).Get()
+	query := sqb_go.QB.Table("example").Where("e_key", "=", key).Get()
 	err := r.db.GetContext(ctx, &e, query)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, r.exampleFactory.NewNotFoundError(key)
@@ -45,8 +48,9 @@ func (r *exampleRepo) Get(ctx context.Context, key string) (*example.Example, er
 
 func (r *exampleRepo) Create(ctx context.Context, e *example.Example) error {
 	query := sqb_go.QB.Table("example").Insert(&sqb_go.M{
-		"key":   e.Key,
-		"value": e.Value,
+		"uuid":    uuid.New(),
+		"e_key":   e.Key,
+		"e_value": e.Value,
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
@@ -56,7 +60,7 @@ func (r *exampleRepo) Create(ctx context.Context, e *example.Example) error {
 }
 
 func (r *exampleRepo) Update(ctx context.Context, e *example.Example) error {
-	query := sqb_go.QB.Table("example").Where("key", "=", e.Key).Update(&sqb_go.M{
+	query := sqb_go.QB.Table("example").Where("e_key", "=", e.Key).Update(&sqb_go.M{
 		"value": e.Value,
 	})
 	_, err := r.db.ExecContext(ctx, query)
@@ -67,7 +71,7 @@ func (r *exampleRepo) Update(ctx context.Context, e *example.Example) error {
 }
 
 func (r *exampleRepo) Delete(ctx context.Context, key string) error {
-	query := sqb_go.QB.Table("example").Where("key", "=", key).Delete()
+	query := sqb_go.QB.Table("example").Where("e_key", "=", key).Delete()
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
 		return errors.Wrap(err, "failed to delete example")
@@ -76,7 +80,7 @@ func (r *exampleRepo) Delete(ctx context.Context, key string) error {
 }
 
 func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*example.Example, int, error) {
-	var examples []*example.Example
+	var examples []*entity.MySQLExampleEntity
 	query := sqb_go.QB.Table("example").Limit(limit).Offset(offset).Get()
 	err := r.db.SelectContext(ctx, &examples, query)
 	if err != nil {
@@ -86,7 +90,11 @@ func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*examp
 	if err != nil {
 		return nil, 0, errors.Wrap(err, "failed to count examples")
 	}
-	return examples, total, nil
+	returnExamples := make([]*example.Example, len(examples))
+	for i, e := range examples {
+		returnExamples[i] = e.ToExample()
+	}
+	return returnExamples, total, nil
 }
 
 func (r *exampleRepo) Count(ctx context.Context) (int, error) {
@@ -111,6 +119,13 @@ func New(cnf config.MySQL) (*sqlx.DB, error) {
 	db, err := sqlx.Connect("mysql", config.FormatDSN())
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to open mysql connection")
+	}
+
+	migration := mysql_migration.New(db)
+	migration.Add(entity.NewExampleMigration())
+	err = migration.Up()
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to migrate mysql")
 	}
 	return db, nil
 }

@@ -3,6 +3,7 @@ package example
 import "github.com/pkg/errors"
 
 type Example struct {
+	UUID  string
 	Key   string
 	Value string
 }
