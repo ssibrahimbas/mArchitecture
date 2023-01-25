@@ -27,7 +27,7 @@ func (r *exampleRepo) Get(ctx context.Context, field string) (*example.Example, 
 
 func (r *exampleRepo) Create(ctx context.Context, e *example.Example) *i18n.I18nError {
 	if err := r.exampleFactory.Validate(e); err != nil {
-		return i18n.NewError(example.I18nMessages.Validation_Failed, i18n.P{})
+		return err
 	}
 	query := sqb_go.QB.Table(entity.Fields.Table).Insert(&sqb_go.M{
 		entity.Fields.UUID:    uuid.New(),
