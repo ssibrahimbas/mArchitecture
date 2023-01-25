@@ -1,8 +1,10 @@
 package command
 
 import (
+	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
 	"clean-boilerplate/shared/decorator"
+	"clean-boilerplate/shared/events"
 	"context"
 
 	"github.com/sirupsen/logrus"
@@ -16,14 +18,28 @@ type UpdateExampleCommand struct {
 type UpdateExampleHandler decorator.CommandHandler[UpdateExampleCommand]
 
 type updateExampleHandler struct {
-	exampleRepo example.Repository
+	exampleRepo   example.Repository
+	exampleTopics config.ExampleTopics
+	publisher     events.Publisher
 }
 
-func NewUpdateExampleHandler(exampleRepo example.Repository, logger *logrus.Entry, metrics decorator.MetricsClient) UpdateExampleHandler {
+type UpdateExampleHandlerConfig struct {
+	ExampleRepo   example.Repository
+	ExampleTopics config.ExampleTopics
+	Publisher     events.Publisher
+	Logger        *logrus.Entry
+	MetricsClient decorator.MetricsClient
+}
+
+func NewUpdateExampleHandler(config UpdateExampleHandlerConfig) UpdateExampleHandler {
 	return decorator.ApplyCommandDecorators[UpdateExampleCommand](
-		updateExampleHandler{exampleRepo: exampleRepo},
-		logger,
-		metrics,
+		updateExampleHandler{
+			exampleRepo:   config.ExampleRepo,
+			exampleTopics: config.ExampleTopics,
+			publisher:     config.Publisher,
+		},
+		config.Logger,
+		config.MetricsClient,
 	)
 }
 
@@ -33,5 +49,9 @@ func (h updateExampleHandler) Handle(ctx context.Context, command UpdateExampleC
 		Content: command.Content,
 	}
 
-	return h.exampleRepo.Update(ctx, example)
+	err := h.exampleRepo.Update(ctx, example)
+	if err != nil {
+		return err
+	}
+	return h.publisher.Publish(h.exampleTopics.Updated, example)
 }

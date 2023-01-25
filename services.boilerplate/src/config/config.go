@@ -25,10 +25,26 @@ type Cors struct {
 	AllowCredentials bool   `env:"CORS_ALLOW_CREDENTIALS" envDefault:"true"`
 }
 
+type Topics struct {
+	Example ExampleTopics
+}
+
+type ExampleTopics struct {
+	Created string `env:"STREAMING_TOPIC_EXAMPLE_CREATED"`
+	Updated string `env:"STREAMING_TOPIC_EXAMPLE_UPDATED"`
+}
+
+type Nats struct {
+	Url     string   `env:"NATS_URL" envDefault:"nats://localhost:4222"`
+	Streams []string `env:"NATS_STREAMS" envDefault:""`
+}
+
 type App struct {
 	Protocol     string `env:"PROTOCOL" envDefault:"http"`
 	MySQLExample MySQLExample
 	Server       Server
 	Cors         Cors
 	I18n         I18n
+	Topics       Topics
+	Nats         Nats
 }

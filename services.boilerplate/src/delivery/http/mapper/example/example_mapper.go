@@ -3,8 +3,8 @@ package example_mapper
 import (
 	"clean-boilerplate/boilerplate/src/app/command"
 	"clean-boilerplate/boilerplate/src/app/query"
+	"clean-boilerplate/boilerplate/src/delivery/http/dtos"
 	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/boilerplate/src/protocols/http/dtos"
 )
 
 type Mapper interface {

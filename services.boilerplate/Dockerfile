@@ -4,7 +4,7 @@ COPY ./services.boilerplate ./boilerplate
 COPY ./services.shared ../services.shared
 WORKDIR /boilerplate
 RUN go mod download && go mod tidy
-RUN go build -o main ./src/main.go
+RUN go build -o main ./src/cmd/main.go
 
 FROM alpine:latest AS runner
 

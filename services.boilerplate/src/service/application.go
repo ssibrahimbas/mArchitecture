@@ -7,12 +7,13 @@ import (
 	"clean-boilerplate/boilerplate/src/app/query"
 	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/boilerplate/src/domain/example"
+	"clean-boilerplate/shared/events"
 	"clean-boilerplate/shared/metrics"
 
 	"github.com/sirupsen/logrus"
 )
 
-func NewApplication(config config.App) app.Application {
+func NewApplication(config config.App, eventEngine events.Engine) app.Application {
 	sqlDb, err := mysql_example.New(config.MySQLExample)
 	if err != nil {
 		panic(err)
@@ -37,8 +38,20 @@ func NewApplication(config config.App) app.Application {
 
 	return app.Application{
 		Commands: app.Commands{
-			CreateExample: command.NewCreateExampleHandler(exampleRepo, logger, metricsClient),
-			UpdateExample: command.NewUpdateExampleHandler(exampleRepo, logger, metricsClient),
+			CreateExample: command.NewCreateExampleHandler(command.CreateExampleHandlerConfig{
+				ExampleRepo:   exampleRepo,
+				ExampleTopics: config.Topics.Example,
+				Publisher:     eventEngine,
+				Logger:        logger,
+				MetricsClient: metricsClient,
+			}),
+			UpdateExample: command.NewUpdateExampleHandler(command.UpdateExampleHandlerConfig{
+				ExampleRepo:   exampleRepo,
+				ExampleTopics: config.Topics.Example,
+				Publisher:     eventEngine,
+				Logger:        logger,
+				MetricsClient: metricsClient,
+			}),
 		},
 		Queries: app.Queries{
 			ListExample: query.NewListExampleHandler(exampleRepo, logger, metricsClient),

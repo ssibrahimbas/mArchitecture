@@ -2,7 +2,7 @@ package http
 
 import (
 	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/boilerplate/src/protocols/http/mapper"
+	"clean-boilerplate/boilerplate/src/delivery/http/mapper"
 	"clean-boilerplate/shared/i18n"
 	"clean-boilerplate/shared/server/http/parser"
 	"clean-boilerplate/shared/validator"

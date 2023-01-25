@@ -23,6 +23,14 @@ services:
       - ./__persist__/mysql:/var/lib/mysql
     networks:
       - default
+  nats-server:
+    image: nats:alpine
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./jetstream/js.conf:/etc/nats/js.conf
+    command: ["-c", "/etc/nats/js.conf"]
   example:
     build:
       context: .
@@ -35,10 +43,10 @@ services:
       - .env
     environment:
       PROTOCOL: http
-      MYSQL_ADDRESS: ${MYSQL_ADDRESS}
-      MYSQL_USERNAME: ${MYSQL_USERNAME}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      EXAMPLE_MYSQL_ADDRESS: ${MYSQL_ADDRESS}
+      EXAMPLE_MYSQL_USERNAME: ${MYSQL_USERNAME}
+      EXAMPLE_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      EXAMPLE_MYSQL_DATABASE: ${MYSQL_DATABASE}
       SERVER_HOST: 0.0.0.0
       SERVER_PORT: 3000
       CORS_ALLOWED_ORIGINS: "*"
@@ -48,8 +56,19 @@ services:
       I18N_FALLBACK_LANGUAGE: en
       I18N_DIR: ./src/locales
       I18N_LOCALES: en,tr
+      NATS_URL: nats://nats-server:4222
+      NATS_STREAMS: "Example"
+      STREAMING_TOPIC_EXAMPLE_CREATED: Example.Created
+      STREAMING_TOPIC_EXAMPLE_UPDATED: Example.Updated
     networks:
       - default
+      - nats-server
     depends_on:
       mysql:
         condition: service_healthy
+      nats-server:
+        condition: service_started
+
+networks:
+  nats-server:
+    name: nats-server

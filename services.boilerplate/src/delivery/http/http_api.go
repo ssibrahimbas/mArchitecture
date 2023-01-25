@@ -1,7 +1,7 @@
 package http
 
 import (
-	"clean-boilerplate/boilerplate/src/protocols/http/dtos"
+	"clean-boilerplate/boilerplate/src/delivery/http/dtos"
 	"clean-boilerplate/shared/i18n"
 	httpI18n "clean-boilerplate/shared/server/http/i18n"
 	"clean-boilerplate/shared/server/http/result"
