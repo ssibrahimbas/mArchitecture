@@ -26,13 +26,15 @@ func New() Mapper {
 
 func (m *mapper) ReqToGetExample(d *dtos.GetExampleRequest) query.GetExampleQuery {
 	return query.GetExampleQuery{
-		Key: d.Key,
+		Field: d.Field,
 	}
 }
 
 func (m *mapper) GetExampleQueryToRes(d *query.GetExampleResult) dtos.GetExampleResponse {
 	return dtos.GetExampleResponse{
-		Key: d.Key,
+		Field:   d.Field,
+		UUID:    d.UUID,
+		Content: d.Content,
 	}
 }
 
@@ -60,20 +62,22 @@ func (m *mapper) ListExampleQueryToResItems(d []*example.Example) []example.Exam
 
 func (m *mapper) ListExampleQueryToResItem(d *example.Example) example.Example {
 	return example.Example{
-		Key: d.Key,
+		Field:   d.Field,
+		Content: d.Content,
+		UUID:    d.UUID,
 	}
 }
 
 func (m *mapper) ReqToCreateExample(d *dtos.CreateExampleRequest) command.CreateExampleCommand {
 	return command.CreateExampleCommand{
-		Key:   d.Key,
-		Value: d.Value,
+		Field:   d.Field,
+		Content: d.Content,
 	}
 }
 
 func (m *mapper) ReqToUpdateExample(d *dtos.UpdateExampleRequest) command.UpdateExampleCommand {
 	return command.UpdateExampleCommand{
-		Key:   d.Key,
-		Value: d.Value,
+		Field:   d.Field,
+		Content: d.Content,
 	}
 }

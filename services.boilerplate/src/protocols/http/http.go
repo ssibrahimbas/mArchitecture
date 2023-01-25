@@ -39,10 +39,10 @@ func New(config Config) Server {
 }
 
 func (h Server) Load(router fiber.Router) fiber.Router {
-	router.Get("/example/:key", h.wrapWithTimeout(h.GetExample))
+	router.Get("/example/:field", h.wrapWithTimeout(h.GetExample))
 	router.Get("/example", h.wrapWithTimeout(h.ListExample))
 	router.Post("/example", h.wrapWithTimeout(h.CreateExample))
-	router.Put("/example/:key", h.wrapWithTimeout(h.UpdateExample))
+	router.Put("/example/:field", h.wrapWithTimeout(h.UpdateExample))
 	return router
 }
 

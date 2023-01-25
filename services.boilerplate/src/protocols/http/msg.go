@@ -12,6 +12,7 @@ type errorMessages struct {
 	ListExample   string
 	CreateExample string
 	UpdateExample string
+	Unexpected    string
 }
 
 type messages struct {
@@ -31,5 +32,6 @@ var Messages = messages{
 		ListExample:   "error_example_list",
 		CreateExample: "error_example_create",
 		UpdateExample: "error_example_update",
+		Unexpected:    "error_unexpected",
 	},
 }

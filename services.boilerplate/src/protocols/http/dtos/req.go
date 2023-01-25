@@ -1,8 +1,8 @@
 package dtos
 
 type CreateExampleRequest struct {
-	Key   string `json:"key" validate:"required"`
-	Value string `json:"value" validate:"required"`
+	Field   string `json:"field" validate:"required"`
+	Content string `json:"content" validate:"required"`
 }
 
 type ListExampleRequest struct {
@@ -11,12 +11,12 @@ type ListExampleRequest struct {
 }
 
 type GetExampleRequest struct {
-	Key string `param:"key" validate:"required"`
+	Field string `param:"field" validate:"required"`
 }
 
 type UpdateExampleRequest struct {
-	Key   string `param:"key" validate:"required"`
-	Value string `json:"value" validate:"required"`
+	Field   string `param:"field" validate:"required"`
+	Content string `json:"content" validate:"required"`
 }
 
 func (r *ListExampleRequest) Default() {

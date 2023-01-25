@@ -40,3 +40,10 @@ func (i *I18n) TranslateWithParams(key string, params interface{}, languages ...
 		TemplateData: params,
 	}, languages...)
 }
+
+func (i *I18n) TranslateFromError(err I18nError, languages ...string) string {
+	return i.translate(&i18n.LocalizeConfig{
+		MessageID:    err.Key,
+		TemplateData: err.Params,
+	}, languages...)
+}

@@ -19,8 +19,8 @@ func NewExampleMigration() mysql_migration.MigrationItem {
 func (m *MySQLExampleMigration) Up(db *sqlx.DB) error {
 	query := `CREATE TABLE IF NOT EXISTS boilerplate.example (
 		uuid VARCHAR(255) NOT NULL PRIMARY KEY,
-		e_key VARCHAR(255) NOT NULL,
-		e_value VARCHAR(255) NOT NULL
+		field VARCHAR(255) NOT NULL,
+		content VARCHAR(255) NOT NULL
 	)`
 	_, err := db.Exec(query)
 	if err != nil {

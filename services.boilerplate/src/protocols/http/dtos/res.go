@@ -3,8 +3,8 @@ package dtos
 import "clean-boilerplate/boilerplate/src/domain/example"
 
 type CreateExampleResponse struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Field   string `json:"field"`
+	Content string `json:"content"`
 }
 
 type ListExampleResponse struct {
@@ -15,11 +15,12 @@ type ListExampleResponse struct {
 }
 
 type GetExampleResponse struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	UUID    string `json:"uuid"`
+	Field   string `json:"field"`
+	Content string `json:"content"`
 }
 
 type UpdateExampleResponse struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Field   string `json:"field"`
+	Content string `json:"content"`
 }

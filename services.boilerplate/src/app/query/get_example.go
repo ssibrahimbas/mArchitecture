@@ -9,12 +9,13 @@ import (
 )
 
 type GetExampleQuery struct {
-	Key string
+	Field string
 }
 
 type GetExampleResult struct {
-	Value string
-	Key   string
+	UUID    string
+	Content string
+	Field   string
 }
 
 type GetExampleHandler decorator.QueryHandler[GetExampleQuery, GetExampleResult]
@@ -32,10 +33,10 @@ func NewGetExampleHandler(exampleRepo example.Repository, logger *logrus.Entry, 
 }
 
 func (h getExampleHandler) Handle(ctx context.Context, query GetExampleQuery) (GetExampleResult, error) {
-	example, err := h.exampleRepo.Get(ctx, query.Key)
+	example, err := h.exampleRepo.Get(ctx, query.Field)
 	if err != nil {
 		return GetExampleResult{}, err
 	}
 
-	return GetExampleResult{Value: example.Value, Key: example.Key}, nil
+	return GetExampleResult{Content: example.Content, Field: example.Field, UUID: example.UUID}, nil
 }

@@ -20,10 +20,10 @@ func NewApplication(ctx context.Context, config config.App) app.Application {
 	}
 
 	factoryConfig := example.FactoryConfig{
-		MaxKeyLength:   10,
-		MaxValueLength: 10,
-		MinKeyLength:   1,
-		MinValueLength: 1,
+		MaxFieldLength:   10,
+		MaxContentLength: 10,
+		MinFieldLength:   1,
+		MinContentLength: 1,
 	}
 
 	exampleFactory, err := example.NewFactory(factoryConfig)
