@@ -20,7 +20,7 @@ func (r *exampleRepo) Get(ctx context.Context, field string) (*example.Example, 
 		return nil, r.exampleFactory.NewNotFoundError(field)
 	}
 	if err != nil {
-		return nil, i18n.NewError(example.I18nMessages.Get_Failed, i18n.P{})
+		return nil, i18n.NewError(example.I18nMessages.Get_Failed)
 	}
 	return r.mapper.ToExample(&e)
 }
@@ -36,7 +36,7 @@ func (r *exampleRepo) Create(ctx context.Context, e *example.Example) *i18n.I18n
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return i18n.NewError(example.I18nMessages.Create_Failed, i18n.P{})
+		return i18n.NewError(example.I18nMessages.Create_Failed)
 	}
 	return nil
 }
@@ -47,7 +47,7 @@ func (r *exampleRepo) Update(ctx context.Context, e *example.Example) *i18n.I18n
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return i18n.NewError(example.I18nMessages.Update_Failed, i18n.P{})
+		return i18n.NewError(example.I18nMessages.Update_Failed)
 	}
 	return nil
 }
@@ -57,7 +57,7 @@ func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*examp
 	query := sqb_go.QB.Table(entity.Fields.Table).Limit(limit).Offset(offset).Get()
 	err := r.db.SelectContext(ctx, &examples, query)
 	if err != nil {
-		return nil, 0, i18n.NewError(example.I18nMessages.List_Failed, i18n.P{})
+		return nil, 0, i18n.NewError(example.I18nMessages.List_Failed)
 	}
 	count, error := r.Count(ctx)
 	if error != nil {
@@ -72,7 +72,7 @@ func (r *exampleRepo) Count(ctx context.Context) (int, *i18n.I18nError) {
 	query := sqb_go.QB.Table(entity.Fields.Table).Count(entity.Fields.UUID, "count").Get()
 	err := r.db.GetContext(ctx, &count, query)
 	if err != nil {
-		return 0, i18n.NewError(example.I18nMessages.Count_Failed, i18n.P{})
+		return 0, i18n.NewError(example.I18nMessages.Count_Failed)
 	}
 	return count, nil
 }
