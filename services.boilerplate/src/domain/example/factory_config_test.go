@@ -20,7 +20,7 @@ func TestFactoryConfig_Validate(t *testing.T) {
 				MinFieldLength:   1,
 				MaxFieldLength:   100,
 				MinContentLength: 1,
-				MaxContentLength: 100,
+				MaxContentLength: 0,
 			},
 			wantErr: false,
 		},

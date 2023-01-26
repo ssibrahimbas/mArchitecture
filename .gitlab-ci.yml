@@ -4,12 +4,11 @@ stages:
 variables:
   CGO_ENABLED: 0
 
-install-dependencies:
-  stage: test
-  image: golang:1.19-alpine
-  script:
-    - go mod download
-    - go mod verify
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - go.mod
+    - go.sum
 
 golang-test:
   stage: test
