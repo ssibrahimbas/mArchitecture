@@ -1,6 +1,9 @@
 stages:
   - test
 
+variables:
+  CGO_ENABLED: 0
+
 install-dependencies:
   stage: test
   image: golang:1.19-alpine
