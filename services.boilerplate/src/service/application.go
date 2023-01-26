@@ -1,6 +1,7 @@
 package service
 
 import (
+	"clean-boilerplate/boilerplate/src/adapters"
 	mysql_example "clean-boilerplate/boilerplate/src/adapters/mysql/example"
 	"clean-boilerplate/boilerplate/src/app"
 	"clean-boilerplate/boilerplate/src/app/command"
@@ -31,7 +32,7 @@ func NewApplication(config config.App, eventEngine events.Engine) app.Applicatio
 		panic(err)
 	}
 
-	exampleRepo := mysql_example.NewExampleRepo(sqlDb, exampleFactory)
+	exampleRepo := adapters.MySQL.NewExample(sqlDb, exampleFactory)
 
 	logger := logrus.NewEntry(logrus.StandardLogger())
 	metricsClient := metrics.NoOp{}
