@@ -13,7 +13,7 @@ golang-test:
   image: golang:1.19-alpine
   script:
     - go install gotest.tools/gotestsum@latest
-    - gotestsum cgo_enabled=0 --junitfile report.xml --format testname ./services.boilerplate/... ./services.shared/...
+    - gotestsum --junitfile report.xml --format testname ./services.boilerplate/... ./services.shared/...
   artifacts:
     when: always
     reports:
