@@ -20,7 +20,3 @@ func (s Server) CreateExample(ctx context.Context, req *example.CreateExampleReq
 func (s Server) UpdateExample(ctx context.Context, req *example.UpdateExampleRequest) (*example.UpdateExampleResponse, error) {
 	return nil, nil
 }
-
-func (s Server) mustEmbedUnimplementedExampleServiceServer() {
-	panic("implement me")
-}
