@@ -12,8 +12,8 @@ import (
 	"clean-boilerplate/shared/i18n"
 )
 
-func Test_createExampleHandler_Handle(t *testing.T) {
-	mock := preCreateTest()
+func Test_updateExampleHandler_Handle(t *testing.T) {
+	mock := preUpdatedTest()
 
 	type fields struct {
 		exampleRepo   example.Repository
@@ -22,9 +22,8 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 	}
 	type args struct {
 		ctx     context.Context
-		command CreateExampleCommand
+		command UpdateExampleCommand
 	}
-
 	tests := []struct {
 		name    string
 		fields  fields
@@ -32,7 +31,7 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "should create example",
+			name: "update example",
 			fields: fields{
 				exampleRepo:   mock.repo,
 				exampleTopics: mock.topics,
@@ -40,7 +39,7 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 			},
 			args: args{
 				ctx: mock.ctx,
-				command: CreateExampleCommand{
+				command: UpdateExampleCommand{
 					Field:   "field",
 					Content: "content",
 				},
@@ -48,7 +47,7 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "should return error",
+			name: "update example error",
 			fields: fields{
 				exampleRepo:   mock.repo,
 				exampleTopics: mock.topics,
@@ -56,7 +55,7 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 			},
 			args: args{
 				ctx: mock.ctx,
-				command: CreateExampleCommand{
+				command: UpdateExampleCommand{
 					Field:   "field2",
 					Content: "content2",
 				},
@@ -66,54 +65,52 @@ func Test_createExampleHandler_Handle(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			h := createExampleHandler{
+			h := updateExampleHandler{
 				exampleRepo:   tt.fields.exampleRepo,
 				exampleTopics: tt.fields.exampleTopics,
 				publisher:     tt.fields.publisher,
 			}
 			if err := h.Handle(tt.args.ctx, tt.args.command); (err != nil) != tt.wantErr {
-				t.Errorf("createExampleHandler.Handle() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("updateExampleHandler.Handle() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
 }
 
-type createTestMocks struct {
+type updateTestMocks struct {
 	repo      *example_mocks.Repository
 	publisher *event_mocks.Publisher
 	topics    config.ExampleTopics
 	ctx       context.Context
 }
 
-func preCreateTest() createTestMocks {
+func preUpdatedTest() updateTestMocks {
 	ctx := context.Background()
 
 	repo := &example_mocks.Repository{}
 	publisher := &event_mocks.Publisher{}
 
 	topics := config.ExampleTopics{
-		Created: "Example.Created",
+		Created: "Example.Updated",
 	}
 
-	publisher.On("Publish", topics.Created, &example.Example{
+	publisher.On("Publish", topics.Updated, &example.Example{
 		Field:   "field",
 		Content: "content",
 		UUID:    "",
 	}).Return(nil)
 
-	repo.On("Create", context.Background(), &example.Example{
+	repo.On("Update", ctx, &example.Example{
 		Field:   "field",
 		Content: "content",
-		UUID:    "",
 	}).Return(nil)
 
-	repo.On("Create", ctx, &example.Example{
+	repo.On("Update", ctx, &example.Example{
 		Field:   "field2",
 		Content: "content2",
-		UUID:    "",
 	}).Return(i18n.NewError("error"))
 
-	return createTestMocks{
+	return updateTestMocks{
 		repo:      repo,
 		publisher: publisher,
 		topics:    topics,
