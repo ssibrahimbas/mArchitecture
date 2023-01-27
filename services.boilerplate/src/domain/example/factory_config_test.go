@@ -24,6 +24,76 @@ func TestFactoryConfig_Validate(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "invalid config with max content length",
+			fields: fields{
+				MinFieldLength:   1,
+				MaxFieldLength:   100,
+				MinContentLength: 1,
+				MaxContentLength: 0,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with min content length",
+			fields: fields{
+				MinFieldLength:   1,
+				MaxFieldLength:   100,
+				MinContentLength: -1,
+				MaxContentLength: 100,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with max field length",
+			fields: fields{
+				MinFieldLength:   1,
+				MaxFieldLength:   -1,
+				MinContentLength: 1,
+				MaxContentLength: 100,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with min field length",
+			fields: fields{
+				MinFieldLength:   -1,
+				MaxFieldLength:   100,
+				MinContentLength: 1,
+				MaxContentLength: 100,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with min field length greater than max field length",
+			fields: fields{
+				MinFieldLength:   101,
+				MaxFieldLength:   100,
+				MinContentLength: 1,
+				MaxContentLength: 100,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with min content length greater than max content length",
+			fields: fields{
+				MinFieldLength:   1,
+				MaxFieldLength:   100,
+				MinContentLength: 101,
+				MaxContentLength: 100,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid config with max content length less than 0",
+			fields: fields{
+				MinFieldLength:   1,
+				MaxFieldLength:   100,
+				MinContentLength: 1,
+				MaxContentLength: -1,
+			},
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
