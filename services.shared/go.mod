@@ -6,7 +6,9 @@ require (
 	github.com/BurntSushi/toml v1.0.0
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/goccy/go-json v0.10.0
 	github.com/gofiber/fiber/v2 v2.41.0
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/nats-io/nats.go v1.23.0
@@ -26,7 +28,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.15.11 // indirect
