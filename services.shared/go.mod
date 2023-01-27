@@ -14,6 +14,7 @@ require (
 	github.com/nats-io/nats.go v1.23.0
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
 	github.com/sirupsen/logrus v1.9.0
+	github.com/stretchr/testify v1.7.0
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
 	go.deanishe.net/env v0.5.1
 	go.mongodb.org/mongo-driver v1.11.1
@@ -25,6 +26,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -42,7 +44,9 @@ require (
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/onsi/gomega v1.26.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/stretchr/objx v0.1.1 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.43.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
@@ -57,4 +61,5 @@ require (
 	golang.org/x/term v0.4.0 // indirect
 	google.golang.org/genproto v0.0.0-20221118155620-16455021b5e6 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
