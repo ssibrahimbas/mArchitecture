@@ -30,9 +30,9 @@ func NewHandler(cnf HandlerConfig) Handler {
 }
 
 func (h *handler) ListenAll() {
-	h.engine.Subscribe(h.createEventName("Created"), h.onCreate)
-	h.engine.Subscribe(h.createEventName("Deleted"), h.onDelete)
-	h.engine.Subscribe(h.createEventName("Extended"), h.onExtend)
+	_ = h.engine.Subscribe(h.createEventName("Created"), h.onCreate)
+	_ = h.engine.Subscribe(h.createEventName("Deleted"), h.onDelete)
+	_ = h.engine.Subscribe(h.createEventName("Extended"), h.onExtend)
 }
 
 func (h *handler) createEventName(event string) string {
@@ -45,7 +45,7 @@ func (h *handler) onCreate(data []byte) {
 	if err != nil {
 		return
 	}
-	h.srv.Extend(d.Token)
+	_ = h.srv.Extend(d.Token)
 }
 
 func (h *handler) onDelete(data []byte) {
@@ -54,7 +54,7 @@ func (h *handler) onDelete(data []byte) {
 	if err != nil {
 		return
 	}
-	h.srv.Expire(d.Token)
+	_ = h.srv.Expire(d.Token)
 }
 
 func (h *handler) onExtend(data []byte) {
@@ -63,5 +63,5 @@ func (h *handler) onExtend(data []byte) {
 	if err != nil {
 		return
 	}
-	h.srv.Extend(d.Token)
+	_ = h.srv.Extend(d.Token)
 }

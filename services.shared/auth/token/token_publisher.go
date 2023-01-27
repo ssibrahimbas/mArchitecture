@@ -18,6 +18,7 @@ func NewPublisher(cnf PublisherConfig) Publisher {
 	if cnf.Topic == "" {
 		cnf.Topic = "Token"
 	}
+
 	return &publisher{
 		engine: cnf.Engine,
 		topic:  cnf.Topic,
@@ -29,15 +30,15 @@ func (p *publisher) createEventName(event string) string {
 }
 
 func (p *publisher) Created(token string) {
-	p.engine.Publish(p.createEventName("Created"), p.toDto(token))
+	_ = p.engine.Publish(p.createEventName("Created"), p.toDto(token))
 }
 
 func (p *publisher) Deleted(token string) {
-	p.engine.Publish(p.createEventName("Deleted"), p.toDto(token))
+	_ = p.engine.Publish(p.createEventName("Deleted"), p.toDto(token))
 }
 
 func (p *publisher) Extended(token string) {
-	p.engine.Publish(p.createEventName("Extended"), p.toDto(token))
+	_ = p.engine.Publish(p.createEventName("Extended"), p.toDto(token))
 }
 
 func (p *publisher) toDto(token string) *dto {
