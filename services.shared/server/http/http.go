@@ -1,8 +1,9 @@
 package http
 
 import (
-	"encoding/json"
 	"fmt"
+
+	"github.com/goccy/go-json"
 
 	"clean-boilerplate/boilerplate/src/config"
 	"clean-boilerplate/shared/i18n"
@@ -31,6 +32,7 @@ func RunServer(cfg Config) {
 
 func RunServerOnAddr(addr string, cfg Config) {
 	app := fiber.New(fiber.Config{
+		Prefork: true,
 		ErrorHandler: error_handler.New(error_handler.Config{
 			//DfMsgKey: "error_internal_server_error",
 			I18n: cfg.I18n,
