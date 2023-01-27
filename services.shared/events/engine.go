@@ -1,6 +1,6 @@
 package events
 
-type Handler func(data interface{})
+type Handler func(data []byte)
 
 type Engine interface {
 	// PublishEvent publishes an event to the event bus
