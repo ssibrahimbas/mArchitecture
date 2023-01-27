@@ -10,15 +10,18 @@ cache:
   paths:
     - go.mod
     - go.sum
+    - .golangci.yml
 
-lint-golang:
+lint-all:
   stage: lint
   image: golang:1.19-alpine
   script:
     - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-    - golangci-lint run --out-format=checkstyle --out=report.xml ./services.boilerplate/... ./services.shared/...
+    - golangci-lint run
+  artifacts:
+    when: always
 
-golang-test:
+test-all:
   stage: test
   image: golang:1.19-alpine
   script:
