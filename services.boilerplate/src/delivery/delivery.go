@@ -53,7 +53,12 @@ func New(config Config) Delivery {
 }
 
 func (d *delivery) Load() {
-	d.loadEventStream().loadHTTP().loadRPC()
+	d.loadEventStream()
+	if d.config.Protocol == "grpc" {
+		d.loadRPC()
+		return
+	}
+	d.loadHTTP()
 }
 
 func (d *delivery) loadHTTP() *delivery {
