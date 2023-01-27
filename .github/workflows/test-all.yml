@@ -1,4 +1,6 @@
 name: Test All
+env:
+  CGO_ENABLED: 0
 on:
   push
 jobs:
