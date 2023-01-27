@@ -1,0 +1,21 @@
+name: Lint all
+on:
+  push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.19-alpine
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install golangci-lint
+        run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+      - name: Run golangci-lint
+        run: golangci-lint run ./services.boilerplate/... ./services.shared/... --timeout 5m
+      - name: Upload golangci-lint report
+        uses: actions/upload-artifact@v2
+        with:
+          name: golangci-lint-report
+          path: golangci-lint-report.json
+          if-no-files-found: error
+          retention-days: 1
