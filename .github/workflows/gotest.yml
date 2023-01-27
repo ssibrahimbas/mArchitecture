@@ -1,4 +1,4 @@
-name: Test All
+name: Test Golang
 env:
   CGO_ENABLED: 0
 on:
