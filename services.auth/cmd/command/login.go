@@ -23,6 +23,7 @@ type loginHandler struct {
 	userRepo   user.Repository
 	authTopics config.AuthTopics
 	publisher  events.Publisher
+	errors     user.Errors
 }
 
 type LoginHandlerConfig struct {
@@ -31,6 +32,7 @@ type LoginHandlerConfig struct {
 	Publisher     events.Publisher
 	Logger        *logrus.Entry
 	MetricsClient decorator.MetricsClient
+	Errors        user.Errors
 }
 
 func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
@@ -39,6 +41,7 @@ func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
 			userRepo:   config.UserRepo,
 			authTopics: config.AuthTopics,
 			publisher:  config.Publisher,
+			errors:     config.Errors,
 		},
 		config.Logger,
 		config.MetricsClient,
@@ -52,7 +55,7 @@ func (h loginHandler) Handle(ctx context.Context, command LoginCommand) (*user.U
 	}
 	if err := cipher.Compare(user.Password, command.Password); err != nil {
 		_ = h.publisher.Publish(h.authTopics.LoginFailed, user)
-		return nil, i18n.NewError("invalid password", i18n.P{"Email": command.Email})
+		return nil, h.errors.InvalidPassword()
 	}
 	_ = h.publisher.Publish(h.authTopics.LoggedIn, user)
 	return nil, err

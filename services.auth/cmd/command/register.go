@@ -23,6 +23,7 @@ type registerHandler struct {
 	userRepo   user.Repository
 	authTopics config.AuthTopics
 	publisher  events.Publisher
+	errors     user.Errors
 }
 
 type RegisterHandlerConfig struct {
@@ -31,6 +32,7 @@ type RegisterHandlerConfig struct {
 	Publisher     events.Publisher
 	Logger        *logrus.Entry
 	MetricsClient decorator.MetricsClient
+	Errors        user.Errors
 }
 
 func NewRegisterHandler(config RegisterHandlerConfig) RegisterHandler {
@@ -39,6 +41,7 @@ func NewRegisterHandler(config RegisterHandlerConfig) RegisterHandler {
 			userRepo:   config.UserRepo,
 			authTopics: config.AuthTopics,
 			publisher:  config.Publisher,
+			errors:     config.Errors,
 		},
 		config.Logger,
 		config.MetricsClient,
@@ -51,11 +54,11 @@ func (h registerHandler) Handle(ctx context.Context, command RegisterCommand) (*
 		return nil, err
 	}
 	if already != nil {
-		return nil, i18n.NewError("user already exists", i18n.P{"Email": command.Email})
+		return nil, h.errors.AlreadyExists(command.Email)
 	}
 	pw, error := cipher.Hash(command.Password)
 	if error != nil {
-		return nil, i18n.NewError("error hashing password", i18n.P{"Error": error.Error()})
+		return nil, h.errors.Failed("hash")
 	}
 	user, err := h.userRepo.Create(ctx, command.Email, pw)
 	if err != nil {
