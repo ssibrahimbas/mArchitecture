@@ -3,9 +3,10 @@
 package mocks
 
 import (
+	context "context"
+
 	example "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 	i18n "github.ssibrahimbas/mArchitecture/shared/i18n"
-	context "context"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -16,19 +17,28 @@ type Repository struct {
 }
 
 // Create provides a mock function with given fields: ctx, _a1
-func (_m *Repository) Create(ctx context.Context, _a1 *example.Example) *i18n.I18nError {
+func (_m *Repository) Create(ctx context.Context, _a1 *example.Example) (*example.Example, *i18n.I18nError) {
 	ret := _m.Called(ctx, _a1)
 
-	var r0 *i18n.I18nError
-	if rf, ok := ret.Get(0).(func(context.Context, *example.Example) *i18n.I18nError); ok {
+	var r0 *example.Example
+	if rf, ok := ret.Get(0).(func(context.Context, *example.Example) *example.Example); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*i18n.I18nError)
+			r0 = ret.Get(0).(*example.Example)
 		}
 	}
 
-	return r0
+	var r1 *i18n.I18nError
+	if rf, ok := ret.Get(1).(func(context.Context, *example.Example) *i18n.I18nError); ok {
+		r1 = rf(ctx, _a1)
+	} else {
+		if ret.Get(1) != nil {
+			r1 = ret.Get(1).(*i18n.I18nError)
+		}
+	}
+
+	return r0, r1
 }
 
 // Get provides a mock function with given fields: ctx, field
@@ -89,19 +99,28 @@ func (_m *Repository) List(ctx context.Context, limit int, offset int) ([]*examp
 }
 
 // Update provides a mock function with given fields: ctx, _a1
-func (_m *Repository) Update(ctx context.Context, _a1 *example.Example) *i18n.I18nError {
+func (_m *Repository) Update(ctx context.Context, _a1 *example.Example) (*example.Example, *i18n.I18nError) {
 	ret := _m.Called(ctx, _a1)
 
-	var r0 *i18n.I18nError
-	if rf, ok := ret.Get(0).(func(context.Context, *example.Example) *i18n.I18nError); ok {
+	var r0 *example.Example
+	if rf, ok := ret.Get(0).(func(context.Context, *example.Example) *example.Example); ok {
 		r0 = rf(ctx, _a1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*i18n.I18nError)
+			r0 = ret.Get(0).(*example.Example)
 		}
 	}
 
-	return r0
+	var r1 *i18n.I18nError
+	if rf, ok := ret.Get(1).(func(context.Context, *example.Example) *i18n.I18nError); ok {
+		r1 = rf(ctx, _a1)
+	} else {
+		if ret.Get(1) != nil {
+			r1 = ret.Get(1).(*i18n.I18nError)
+		}
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewRepository interface {

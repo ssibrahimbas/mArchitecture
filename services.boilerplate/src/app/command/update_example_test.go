@@ -72,7 +72,7 @@ func Test_updateExampleHandler_Handle(t *testing.T) {
 				exampleTopics: tt.fields.exampleTopics,
 				publisher:     tt.fields.publisher,
 			}
-			if err := h.Handle(tt.args.ctx, tt.args.command); (err != nil) != tt.wantErr {
+			if _, err := h.Handle(tt.args.ctx, tt.args.command); (err != nil) != tt.wantErr {
 				t.Errorf("updateExampleHandler.Handle() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

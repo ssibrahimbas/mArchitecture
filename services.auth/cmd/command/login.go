@@ -2,7 +2,6 @@ package command
 
 import (
 	"context"
-	"errors"
 
 	"github.com/sirupsen/logrus"
 	"github.ssibrahimbas/mArchitecture/auth/config"
@@ -10,6 +9,7 @@ import (
 	"github.ssibrahimbas/mArchitecture/shared/cipher"
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
 	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
 type LoginCommand struct {
@@ -17,7 +17,7 @@ type LoginCommand struct {
 	Password string
 }
 
-type LoginHandler decorator.CommandHandler[LoginCommand]
+type LoginHandler decorator.CommandHandler[LoginCommand, *user.User]
 
 type loginHandler struct {
 	userRepo   user.Repository
@@ -34,7 +34,7 @@ type LoginHandlerConfig struct {
 }
 
 func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
-	return decorator.ApplyCommandDecorators[LoginCommand](
+	return decorator.ApplyCommandDecorators[LoginCommand, *user.User](
 		loginHandler{
 			userRepo:   config.UserRepo,
 			authTopics: config.AuthTopics,
@@ -45,15 +45,15 @@ func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
 	)
 }
 
-func (h loginHandler) Handle(ctx context.Context, command LoginCommand) error {
+func (h loginHandler) Handle(ctx context.Context, command LoginCommand) (*user.User, *i18n.I18nError) {
 	user, err := h.userRepo.GetByEmail(ctx, command.Email)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := cipher.Compare(user.Password, command.Password); err != nil {
 		_ = h.publisher.Publish(h.authTopics.LoginFailed, user)
-		return errors.New("invalid password")
+		return nil, i18n.NewError("invalid password", i18n.P{"Email": command.Email})
 	}
 	_ = h.publisher.Publish(h.authTopics.LoggedIn, user)
-	return nil
+	return nil, err
 }

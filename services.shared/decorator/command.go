@@ -6,15 +6,16 @@ import (
 	"strings"
 
 	"github.com/sirupsen/logrus"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
-type CommandHandler[C any] interface {
-	Handle(ctx context.Context, cmd C) error
+type CommandHandler[C any, R any] interface {
+	Handle(ctx context.Context, cmd C) (R, *i18n.I18nError)
 }
 
-func ApplyCommandDecorators[H any](handler CommandHandler[H], logger *logrus.Entry, metricsClient MetricsClient) CommandHandler[H] {
-	return &commandLoggingDecorator[H]{
-		base: &commandMetricsDecorator[H]{
+func ApplyCommandDecorators[H any, R any](handler CommandHandler[H, R], logger *logrus.Entry, metricsClient MetricsClient) CommandHandler[H, R] {
+	return &commandLoggingDecorator[H, R]{
+		base: &commandMetricsDecorator[H, R]{
 			base:   handler,
 			client: metricsClient,
 		},

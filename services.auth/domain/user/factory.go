@@ -1,6 +1,11 @@
 package user
 
-import "github.ssibrahimbas/mArchitecture/shared/i18n"
+import (
+	"time"
+
+	"github.ssibrahimbas/mArchitecture/shared/formats"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+)
 
 type Factory struct {
 	Errors Errors
@@ -16,10 +21,15 @@ func (f Factory) IsZero() bool {
 	return f.Errors == nil
 }
 
-func (f Factory) NewUser(email string) *User {
+func (f Factory) NewUser(email string, password []byte) *User {
+	t := time.Now().Format(formats.ISO8600)
 	return &User{
-		Email:    email,
-		IsActive: true,
+		UUID:      "",
+		Email:     email,
+		Password:  password,
+		IsActive:  true,
+		CreatedAt: t,
+		UpdatedAt: t,
 	}
 }
 

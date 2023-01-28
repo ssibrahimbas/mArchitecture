@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
@@ -34,7 +35,7 @@ func NewGetExampleHandler(exampleRepo example.Repository, logger *logrus.Entry, 
 	)
 }
 
-func (h getExampleHandler) Handle(ctx context.Context, query GetExampleQuery) (GetExampleResult, error) {
+func (h getExampleHandler) Handle(ctx context.Context, query GetExampleQuery) (GetExampleResult, *i18n.I18nError) {
 	example, err := h.exampleRepo.Get(ctx, query.Field)
 	if err != nil {
 		return GetExampleResult{}, err

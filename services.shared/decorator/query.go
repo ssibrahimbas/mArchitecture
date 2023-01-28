@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/sirupsen/logrus"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
 func ApplyQueryDecorators[H any, R any](handler QueryHandler[H, R], logger *logrus.Entry, metricsClient MetricsClient) QueryHandler[H, R] {
@@ -17,5 +18,5 @@ func ApplyQueryDecorators[H any, R any](handler QueryHandler[H, R], logger *logr
 }
 
 type QueryHandler[Q any, R any] interface {
-	Handle(ctx context.Context, q Q) (R, error)
+	Handle(ctx context.Context, q Q) (R, *i18n.I18nError)
 }

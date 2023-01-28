@@ -5,10 +5,11 @@ import (
 	"fmt"
 
 	"github.com/sirupsen/logrus"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
-type commandLoggingDecorator[C any] struct {
-	base   CommandHandler[C]
+type commandLoggingDecorator[C any, R any] struct {
+	base   CommandHandler[C, R]
 	logger *logrus.Entry
 }
 
@@ -17,7 +18,7 @@ type queryLoggingDecorator[C any, R any] struct {
 	logger *logrus.Entry
 }
 
-func (d commandLoggingDecorator[C]) Handle(ctx context.Context, cmd C) (err error) {
+func (d commandLoggingDecorator[C, R]) Handle(ctx context.Context, cmd C) (result R, err *i18n.I18nError) {
 	handlerType := generateActionName(cmd)
 
 	logger := d.logger.WithFields(logrus.Fields{
@@ -37,7 +38,7 @@ func (d commandLoggingDecorator[C]) Handle(ctx context.Context, cmd C) (err erro
 	return d.base.Handle(ctx, cmd)
 }
 
-func (d queryLoggingDecorator[C, R]) Handle(ctx context.Context, cmd C) (result R, err error) {
+func (d queryLoggingDecorator[C, R]) Handle(ctx context.Context, cmd C) (result R, err *i18n.I18nError) {
 	logger := d.logger.WithFields(logrus.Fields{
 		"query":      generateActionName(cmd),
 		"query_body": fmt.Sprintf("%#v", cmd),

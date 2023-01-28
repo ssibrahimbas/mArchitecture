@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
@@ -34,7 +35,7 @@ func NewListExampleHandler(exampleRepo example.Repository, logger *logrus.Entry,
 	)
 }
 
-func (h listExampleHandler) Handle(ctx context.Context, query ListExampleQuery) (ListExampleResult, error) {
+func (h listExampleHandler) Handle(ctx context.Context, query ListExampleQuery) (ListExampleResult, *i18n.I18nError) {
 	example, total, err := h.exampleRepo.List(ctx, query.Limit, query.Offset)
 	if err != nil {
 		return ListExampleResult{}, err

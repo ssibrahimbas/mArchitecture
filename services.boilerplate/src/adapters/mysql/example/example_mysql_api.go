@@ -27,9 +27,9 @@ func (r *exampleRepo) Get(ctx context.Context, field string) (*example.Example, 
 	return r.mapper.ToExample(&e)
 }
 
-func (r *exampleRepo) Create(ctx context.Context, e *example.Example) *i18n.I18nError {
+func (r *exampleRepo) Create(ctx context.Context, e *example.Example) (*example.Example, *i18n.I18nError) {
 	if err := r.exampleFactory.Validate(e); err != nil {
-		return err
+		return nil, err
 	}
 	query := sqb_go.QB.Table(entity.Fields.Table).Insert(&sqb_go.M{
 		entity.Fields.UUID:    uuid.New(),
@@ -38,20 +38,20 @@ func (r *exampleRepo) Create(ctx context.Context, e *example.Example) *i18n.I18n
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return i18n.NewError(example.I18nMessages.Create_Failed)
+		return nil, i18n.NewError(example.I18nMessages.Create_Failed)
 	}
-	return nil
+	return e, nil
 }
 
-func (r *exampleRepo) Update(ctx context.Context, e *example.Example) *i18n.I18nError {
+func (r *exampleRepo) Update(ctx context.Context, e *example.Example) (*example.Example, *i18n.I18nError) {
 	query := sqb_go.QB.Table(entity.Fields.Table).Where(entity.Fields.Field, "=", e.Field).Update(&sqb_go.M{
 		entity.Fields.Content: e.Content,
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return i18n.NewError(example.I18nMessages.Update_Failed)
+		return nil, i18n.NewError(example.I18nMessages.Update_Failed)
 	}
-	return nil
+	return e, nil
 }
 
 func (r *exampleRepo) List(ctx context.Context, limit int, offset int) ([]*example.Example, int, *i18n.I18nError) {

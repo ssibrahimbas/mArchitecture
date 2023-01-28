@@ -39,7 +39,7 @@ func (s Server) CreateExample(ctx *fiber.Ctx) error {
 	req := &dtos.CreateExampleRequest{}
 	s.parseBody(ctx, req)
 	l, a := httpI18n.GetLanguagesInContext(s.i18n, ctx)
-	err := s.app.Commands.CreateExample.Handle(s.ctx, s.mapper.Example.ReqToCreateExample(req))
+	_, err := s.app.Commands.CreateExample.Handle(s.ctx, s.mapper.Example.ReqToCreateExample(req))
 	if err != nil {
 		return s.parseErr(err, l, a)
 	}
@@ -52,7 +52,7 @@ func (s Server) UpdateExample(ctx *fiber.Ctx) error {
 	s.parseParams(ctx, req)
 	s.parseBody(ctx, req)
 	l, a := httpI18n.GetLanguagesInContext(s.i18n, ctx)
-	err := s.app.Commands.UpdateExample.Handle(s.ctx, s.mapper.Example.ReqToUpdateExample(req))
+	_, err := s.app.Commands.UpdateExample.Handle(s.ctx, s.mapper.Example.ReqToUpdateExample(req))
 	if err != nil {
 		return s.parseErr(err, l, a)
 	}

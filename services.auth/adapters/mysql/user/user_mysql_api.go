@@ -6,6 +6,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/google/uuid"
 	"github.ssibrahimbas/mArchitecture/auth/adapters/mysql/user/entity"
 	"github.ssibrahimbas/mArchitecture/auth/domain/user"
 	"github.ssibrahimbas/mArchitecture/shared/formats"
@@ -13,31 +14,25 @@ import (
 	sqb_go "gitlab.com/ssibrahimbas/sqb.go"
 )
 
-func (r *repo) Create(ctx context.Context, user *user.User) *i18n.I18nError {
+func (r *repo) Create(ctx context.Context, email string, password []byte) (*user.User, *i18n.I18nError) {
+	user := r.userFactory.NewUser(email, password)
 	e := r.checkExist(ctx, user.Email, false)
 	if e != nil {
-		return r.userFactory.Errors.AlreadyExists(user.Email)
+		return nil, r.userFactory.Errors.AlreadyExists(user.Email)
 	}
-	t := time.Now().Format(formats.DateYYYYMMDDHHMMSS)
-	query := sqb_go.QB.Table(entity.Fields.Table).Insert(&sqb_go.M{
-		entity.Fields.UUID:      user.UUID,
-		entity.Fields.Email:     user.Email,
-		entity.Fields.Password:  user.Password,
-		entity.Fields.IsActive:  true,
-		entity.Fields.CreatedAt: t,
-		entity.Fields.UpdatedAt: t,
-	})
+	user.UUID = uuid.New().String()
+	query := sqb_go.QB.Table(entity.Fields.Table).Insert(r.mapper.ToEntityMap(user))
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return r.userFactory.Errors.Failed("create")
+		return nil, r.userFactory.Errors.Failed("create")
 	}
-	return nil
+	return user, nil
 }
 
-func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
+func (r *repo) Update(ctx context.Context, user *user.User) (*user.User, *i18n.I18nError) {
 	e := r.checkExist(ctx, user.Email, true)
 	if e != nil {
-		return e
+		return nil, e
 	}
 	query := sqb_go.QB.Table(entity.Fields.Table).Where(entity.Fields.UUID, "=", user.UUID).Update(&sqb_go.M{
 		entity.Fields.IsActive:  user.IsActive,
@@ -45,9 +40,9 @@ func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
 	})
 	_, err := r.db.ExecContext(ctx, query)
 	if err != nil {
-		return r.userFactory.Errors.Failed("update")
+		return nil, r.userFactory.Errors.Failed("update")
 	}
-	return nil
+	return user, nil
 }
 
 func (r *repo) GetByEmail(ctx context.Context, email string) (*user.User, *i18n.I18nError) {

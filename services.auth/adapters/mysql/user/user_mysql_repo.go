@@ -8,6 +8,7 @@ import (
 type repo struct {
 	db          *sqlx.DB
 	userFactory user.Factory
+	mapper      Mapper
 }
 
 func New(userFactory user.Factory, db *sqlx.DB) user.Repository {
@@ -15,6 +16,7 @@ func New(userFactory user.Factory, db *sqlx.DB) user.Repository {
 	return &repo{
 		userFactory: userFactory,
 		db:          db,
+		mapper:      NewMapper(),
 	}
 }
 

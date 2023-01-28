@@ -7,16 +7,16 @@ import (
 	"golang.org/x/net/context"
 )
 
-func (r *repo) Create(ctx context.Context, user *user.User) *i18n.I18nError {
-	id := uuid.New().String()
-	user.UUID = id
-	r.users[id] = *user
-	return nil
+func (r *repo) Create(ctx context.Context, email string, password []byte) (*user.User, *i18n.I18nError) {
+	user := r.userFactory.NewUser(email, password)
+	user.UUID = uuid.New().String()
+	r.users[user.UUID] = *user
+	return user, nil
 }
 
-func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
+func (r *repo) Update(ctx context.Context, user *user.User) (*user.User, *i18n.I18nError) {
 	r.users[user.UUID] = *user
-	return nil
+	return user, nil
 }
 
 func (r *repo) GetByEmail(ctx context.Context, email string) (*user.User, *i18n.I18nError) {

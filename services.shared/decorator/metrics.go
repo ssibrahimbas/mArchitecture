@@ -5,14 +5,16 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
 type MetricsClient interface {
 	Inc(key string, value int)
 }
 
-type commandMetricsDecorator[C any] struct {
-	base   CommandHandler[C]
+type commandMetricsDecorator[C any, R any] struct {
+	base   CommandHandler[C, R]
 	client MetricsClient
 }
 
@@ -21,7 +23,7 @@ type queryMetricsDecorator[C any, R any] struct {
 	client MetricsClient
 }
 
-func (d commandMetricsDecorator[C]) Handle(ctx context.Context, cmd C) (err error) {
+func (d commandMetricsDecorator[C, R]) Handle(ctx context.Context, cmd C) (result R, err *i18n.I18nError) {
 	start := time.Now()
 
 	actionName := strings.ToLower(generateActionName(cmd))
@@ -41,7 +43,7 @@ func (d commandMetricsDecorator[C]) Handle(ctx context.Context, cmd C) (err erro
 	return d.base.Handle(ctx, cmd)
 }
 
-func (d queryMetricsDecorator[C, R]) Handle(ctx context.Context, query C) (result R, err error) {
+func (d queryMetricsDecorator[C, R]) Handle(ctx context.Context, query C) (result R, err *i18n.I18nError) {
 	start := time.Now()
 
 	actionName := strings.ToLower(generateActionName(query))

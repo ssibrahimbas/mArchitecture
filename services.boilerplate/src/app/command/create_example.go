@@ -5,6 +5,7 @@ import (
 
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
 	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
@@ -17,7 +18,7 @@ type CreateExampleCommand struct {
 	Content string
 }
 
-type CreateExampleHandler decorator.CommandHandler[CreateExampleCommand]
+type CreateExampleHandler decorator.CommandHandler[CreateExampleCommand, *example.Example]
 
 type createExampleHandler struct {
 	exampleRepo   example.Repository
@@ -34,7 +35,7 @@ type CreateExampleHandlerConfig struct {
 }
 
 func NewCreateExampleHandler(config CreateExampleHandlerConfig) CreateExampleHandler {
-	return decorator.ApplyCommandDecorators[CreateExampleCommand](
+	return decorator.ApplyCommandDecorators[CreateExampleCommand, *example.Example](
 		createExampleHandler{
 			exampleRepo:   config.ExampleRepo,
 			exampleTopics: config.ExampleTopics,
@@ -45,14 +46,15 @@ func NewCreateExampleHandler(config CreateExampleHandlerConfig) CreateExampleHan
 	)
 }
 
-func (h createExampleHandler) Handle(ctx context.Context, command CreateExampleCommand) error {
+func (h createExampleHandler) Handle(ctx context.Context, command CreateExampleCommand) (*example.Example, *i18n.I18nError) {
 	example := &example.Example{
 		Field:   command.Field,
 		Content: command.Content,
 	}
-	err := h.exampleRepo.Create(ctx, example)
+	exmp, err := h.exampleRepo.Create(ctx, example)
 	if err != nil {
-		return err
+		return example, err
 	}
-	return h.publisher.Publish(h.exampleTopics.Created, example)
+	_ = h.publisher.Publish(h.exampleTopics.Created, example)
+	return exmp, nil
 }

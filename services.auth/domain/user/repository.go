@@ -8,6 +8,6 @@ import (
 
 type Repository interface {
 	GetByEmail(ctx context.Context, email string) (*User, *i18n.I18nError)
-	Create(ctx context.Context, user *User) *i18n.I18nError
-	Update(ctx context.Context, user *User) *i18n.I18nError
+	Create(ctx context.Context, email string, password []byte) (*User, *i18n.I18nError)
+	Update(ctx context.Context, user *User) (*User, *i18n.I18nError)
 }

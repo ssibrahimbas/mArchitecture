@@ -1,10 +1,12 @@
 package user
 
 type User struct {
-	UUID     string
-	Email    string
-	Password []byte
-	IsActive bool
+	UUID      string
+	Email     string
+	Password  []byte
+	IsActive  bool
+	CreatedAt string
+	UpdatedAt string
 }
 
 func (u *User) SetPassword(password []byte) {

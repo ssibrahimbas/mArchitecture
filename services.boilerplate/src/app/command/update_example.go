@@ -5,6 +5,7 @@ import (
 
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
 	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
 	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
@@ -17,7 +18,7 @@ type UpdateExampleCommand struct {
 	Content string
 }
 
-type UpdateExampleHandler decorator.CommandHandler[UpdateExampleCommand]
+type UpdateExampleHandler decorator.CommandHandler[UpdateExampleCommand, *example.Example]
 
 type updateExampleHandler struct {
 	exampleRepo   example.Repository
@@ -34,7 +35,7 @@ type UpdateExampleHandlerConfig struct {
 }
 
 func NewUpdateExampleHandler(config UpdateExampleHandlerConfig) UpdateExampleHandler {
-	return decorator.ApplyCommandDecorators[UpdateExampleCommand](
+	return decorator.ApplyCommandDecorators[UpdateExampleCommand, *example.Example](
 		updateExampleHandler{
 			exampleRepo:   config.ExampleRepo,
 			exampleTopics: config.ExampleTopics,
@@ -45,15 +46,16 @@ func NewUpdateExampleHandler(config UpdateExampleHandlerConfig) UpdateExampleHan
 	)
 }
 
-func (h updateExampleHandler) Handle(ctx context.Context, command UpdateExampleCommand) error {
+func (h updateExampleHandler) Handle(ctx context.Context, command UpdateExampleCommand) (*example.Example, *i18n.I18nError) {
 	example := &example.Example{
 		Field:   command.Field,
 		Content: command.Content,
 	}
 
-	err := h.exampleRepo.Update(ctx, example)
+	exmp, err := h.exampleRepo.Update(ctx, example)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return h.publisher.Publish(h.exampleTopics.Updated, example)
+	_ = h.publisher.Publish(h.exampleTopics.Updated, example)
+	return exmp, nil
 }

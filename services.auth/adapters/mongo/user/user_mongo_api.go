@@ -11,34 +11,35 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (r *repo) Create(ctx context.Context, user *user.User) *i18n.I18nError {
+func (r *repo) Create(ctx context.Context, email string, password []byte) (*user.User, *i18n.I18nError) {
+	user := r.userFactory.NewUser(email, password)
 	e := r.checkExist(ctx, user.Email, false)
 	if e != nil {
-		return r.userFactory.Errors.AlreadyExists(user.Email)
+		return nil, r.userFactory.Errors.AlreadyExists(user.Email)
 	}
 	u := &entity.MongoUser{}
 	res, err := r.collection.InsertOne(ctx, u.FromUser(user))
 	if err != nil {
-		return r.userFactory.Errors.Failed("create")
+		return nil, r.userFactory.Errors.Failed("create")
 	}
 	user.UUID = res.InsertedID.(primitive.ObjectID).Hex()
-	return nil
+	return user, nil
 }
 
-func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
+func (r *repo) Update(ctx context.Context, user *user.User) (*user.User, *i18n.I18nError) {
 	u := &entity.MongoUser{}
 	e := r.checkExist(ctx, user.Email, true)
 	if e != nil {
-		return e
+		return nil, e
 	}
 	res, err := r.collection.UpdateOne(ctx, bson.M{"email": user.Email}, bson.M{"$set": u.FromUser(user)})
 	if err != nil {
-		return r.userFactory.Errors.Failed("update")
+		return nil, r.userFactory.Errors.Failed("update")
 	}
 	if res.MatchedCount == 0 {
-		return r.userFactory.Errors.NotFound(user.Email)
+		return nil, r.userFactory.Errors.NotFound(user.Email)
 	}
-	return nil
+	return u.ToUser(), nil
 }
 
 func (r *repo) GetByEmail(ctx context.Context, email string) (*user.User, *i18n.I18nError) {
