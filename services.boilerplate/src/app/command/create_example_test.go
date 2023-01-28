@@ -107,13 +107,13 @@ func preCreateTest() createTestMocks {
 		Field:   "field",
 		Content: "content",
 		UUID:    "",
-	}).Return(nil)
+	}).Return(nil, nil)
 
 	repo.On("Create", ctx, &example.Example{
 		Field:   "field2",
 		Content: "content2",
 		UUID:    "",
-	}).Return(i18n.NewError("error"))
+	}).Return(nil, i18n.NewError("error"))
 
 	return createTestMocks{
 		repo:      repo,

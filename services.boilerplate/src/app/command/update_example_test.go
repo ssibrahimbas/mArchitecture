@@ -100,17 +100,17 @@ func preUpdatedTest() updateTestMocks {
 		Field:   "field",
 		Content: "content",
 		UUID:    "",
-	}).Return(nil)
+	}).Return(nil, nil)
 
 	repo.On("Update", ctx, &example.Example{
 		Field:   "field",
 		Content: "content",
-	}).Return(nil)
+	}).Return(nil, nil)
 
 	repo.On("Update", ctx, &example.Example{
 		Field:   "field2",
 		Content: "content2",
-	}).Return(i18n.NewError("error"))
+	}).Return(nil, i18n.NewError("error"))
 
 	return updateTestMocks{
 		repo:      repo,
