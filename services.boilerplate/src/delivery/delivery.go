@@ -21,8 +21,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-type Loader struct{}
-
 type Delivery interface {
 	Load()
 }

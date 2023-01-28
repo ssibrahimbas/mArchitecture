@@ -1,6 +1,6 @@
 package app
 
-import "github.ssibrahimbas/mArchitecture/auth/cmd/command"
+import "github.ssibrahimbas/mArchitecture/auth/app/command"
 
 type Application struct {
 	Commands Commands
