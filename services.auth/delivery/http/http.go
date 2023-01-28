@@ -9,7 +9,6 @@ import (
 	"github.ssibrahimbas/mArchitecture/auth/app"
 	"github.ssibrahimbas/mArchitecture/auth/delivery/http/mapper"
 	"github.ssibrahimbas/mArchitecture/shared/i18n"
-	"github.ssibrahimbas/mArchitecture/shared/server/http/parser"
 	"github.ssibrahimbas/mArchitecture/shared/validator"
 )
 
@@ -39,9 +38,14 @@ func New(config Config) Server {
 }
 
 func (h Server) Load(router fiber.Router) fiber.Router {
+	router.Post("/register", h.wrapWithTimeout(h.Register))
+	router.Post("/login", h.wrapWithTimeout(h.Login))
+	router.Post("/logout", h.wrapWithTimeout(h.Logout))
+	router.Put("/extend-token", h.wrapWithTimeout(h.RefreshToken))
 	return router
 }
 
+/*
 func (h Server) parseBody(c *fiber.Ctx, d interface{}) {
 	parser.ParseBody(c, h.validator, h.i18n, d)
 }
@@ -53,6 +57,7 @@ func (h Server) parseParams(c *fiber.Ctx, d interface{}) {
 func (h Server) parseQuery(c *fiber.Ctx, d interface{}) {
 	parser.ParseQuery(c, h.validator, h.i18n, d)
 }
+*/
 
 func (h Server) wrapWithTimeout(fn fiber.Handler) fiber.Handler {
 	return timeout.New(fn, 10*time.Second)
