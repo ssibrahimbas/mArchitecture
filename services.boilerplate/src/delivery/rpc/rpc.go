@@ -1,8 +1,9 @@
 package rpc
 
 import (
-	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/shared/genproto/example"
+	"github.ssibrahimbas/mArchitecture/shared/genproto/example"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app"
 )
 
 type Server struct {

@@ -1,8 +1,8 @@
 package adapters
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/memory"
-	"clean-boilerplate/boilerplate/src/adapters/mysql"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/memory"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/mysql"
 )
 
 var (

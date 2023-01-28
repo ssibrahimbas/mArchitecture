@@ -1,8 +1,9 @@
 package rpc
 
 import (
-	"clean-boilerplate/shared/genproto/example"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/genproto/example"
 )
 
 func (s Server) GetExample(ctx context.Context, req *example.GetExampleRequest) (*example.GetExampleResponse, error) {

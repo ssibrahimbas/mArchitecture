@@ -5,9 +5,10 @@ import (
 	"reflect"
 	"testing"
 
-	"clean-boilerplate/boilerplate/src/domain/example"
-	example_mocks "clean-boilerplate/boilerplate/src/domain/example/mocks"
-	"clean-boilerplate/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
+	example_mocks "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example/mocks"
 )
 
 func Test_getExampleHandler_Handle(t *testing.T) {

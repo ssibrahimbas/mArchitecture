@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	i18nRoot "clean-boilerplate/shared/i18n"
+	i18nRoot "github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.com/gofiber/fiber/v2"
 )

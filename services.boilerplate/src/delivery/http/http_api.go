@@ -1,10 +1,11 @@
 package http
 
 import (
-	"clean-boilerplate/boilerplate/src/delivery/http/dtos"
-	"clean-boilerplate/shared/i18n"
-	httpI18n "clean-boilerplate/shared/server/http/i18n"
-	"clean-boilerplate/shared/server/http/result"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	httpI18n "github.ssibrahimbas/mArchitecture/shared/server/http/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/result"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/http/dtos"
 
 	"github.com/gofiber/fiber/v2"
 )

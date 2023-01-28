@@ -1,9 +1,10 @@
 package event_stream
 
 import (
-	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/events"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
 )
 
 type Server struct {
@@ -27,5 +28,5 @@ func New(config Config) Server {
 }
 
 func (s Server) Load() {
-	//s.engine.Subscribe(s.Topics.AnotherCreated, s.ListenAnotherCreated)
+	// s.engine.Subscribe(s.Topics.AnotherCreated, s.ListenAnotherCreated)
 }

@@ -1,9 +1,10 @@
 package mysql_example
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/mysql/example/entity"
-	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/mysql/example/entity"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 )
 
 type MySqlExampleMapper interface {

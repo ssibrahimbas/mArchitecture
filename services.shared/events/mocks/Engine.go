@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	events "clean-boilerplate/shared/events"
+	events "github.ssibrahimbas/mArchitecture/shared/events"
 
 	mock "github.com/stretchr/testify/mock"
 )

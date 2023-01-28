@@ -1,16 +1,16 @@
-module clean-boilerplate/boilerplate
+module github.ssibrahimbas/mArchitecture/boilerplate
 
 go 1.19
 
-replace clean-boilerplate/shared => ../services.shared
+replace github.ssibrahimbas/mArchitecture/shared => ../services.shared
 
 require (
-	clean-boilerplate/shared v0.0.0-00010101000000-000000000000
 	github.com/gofiber/fiber/v2 v2.41.0
 	github.com/google/uuid v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
+	github.ssibrahimbas/mArchitecture/shared v0.0.0-00010101000000-000000000000
 	gitlab.com/ssibrahimbas/sqb.go v0.0.0-20230123070951-1c15112715d6
 	google.golang.org/grpc v1.52.0
 )

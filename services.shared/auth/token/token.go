@@ -1,8 +1,8 @@
 package token
 
 import (
-	"clean-boilerplate/shared/db/redis"
-	"clean-boilerplate/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/db/redis"
+	"github.ssibrahimbas/mArchitecture/shared/events"
 )
 
 type App struct {

@@ -1,6 +1,6 @@
 package memory_example
 
-import "clean-boilerplate/boilerplate/src/domain/example"
+import "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 type exampleRepo struct {
 	examples       map[string]example.Example

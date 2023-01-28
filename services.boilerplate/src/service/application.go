@@ -1,15 +1,16 @@
 package service
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters"
-	mysql_example "clean-boilerplate/boilerplate/src/adapters/mysql/example"
-	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/boilerplate/src/app/command"
-	"clean-boilerplate/boilerplate/src/app/query"
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/shared/events"
-	"clean-boilerplate/shared/metrics"
+	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/metrics"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/adapters"
+	mysql_example "github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/mysql/example"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/command"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/query"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/sirupsen/logrus"
 )

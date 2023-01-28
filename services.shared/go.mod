@@ -1,4 +1,4 @@
-module clean-boilerplate/shared
+module github.ssibrahimbas/mArchitecture/shared
 
 go 1.19
 

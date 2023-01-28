@@ -4,12 +4,14 @@ import (
 	"context"
 	"testing"
 
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/domain/example"
-	example_mocks "clean-boilerplate/boilerplate/src/domain/example/mocks"
-	"clean-boilerplate/shared/events"
-	event_mocks "clean-boilerplate/shared/events/mocks"
-	"clean-boilerplate/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+
+	event_mocks "github.ssibrahimbas/mArchitecture/shared/events/mocks"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
+	example_mocks "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example/mocks"
 )
 
 func Test_createExampleHandler_Handle(t *testing.T) {

@@ -1,26 +1,27 @@
 package delivery
 
 import (
-	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/delivery/event_stream"
-	"clean-boilerplate/boilerplate/src/delivery/http"
-	"clean-boilerplate/boilerplate/src/delivery/rpc"
-	"clean-boilerplate/shared/events"
-	"clean-boilerplate/shared/genproto/example"
-	"clean-boilerplate/shared/i18n"
-	"clean-boilerplate/shared/validator"
 	"context"
 
-	sharedHttp "clean-boilerplate/shared/server/http"
-	sharedRpc "clean-boilerplate/shared/server/rpc"
+	"github.ssibrahimbas/mArchitecture/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/genproto/example"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/validator"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/event_stream"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/http"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/rpc"
+
+	sharedHttp "github.ssibrahimbas/mArchitecture/shared/server/http"
+	sharedRpc "github.ssibrahimbas/mArchitecture/shared/server/rpc"
 
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/grpc"
 )
 
-type Loader struct {
-}
+type Loader struct{}
 
 type Delivery interface {
 	Load()

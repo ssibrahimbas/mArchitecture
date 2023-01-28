@@ -1,15 +1,17 @@
 package main
 
 import (
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/delivery"
-
-	"clean-boilerplate/boilerplate/src/service"
-	"clean-boilerplate/shared/env"
-	"clean-boilerplate/shared/events/nats"
-	"clean-boilerplate/shared/i18n"
-	"clean-boilerplate/shared/logs"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/env"
+	"github.ssibrahimbas/mArchitecture/shared/events/nats"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/logs"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/service"
 )
 
 func main() {

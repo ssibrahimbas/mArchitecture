@@ -1,11 +1,12 @@
 package current_user
 
 import (
-	"clean-boilerplate/shared/auth/token"
-	"clean-boilerplate/shared/i18n"
-	"clean-boilerplate/shared/jwt"
-	"clean-boilerplate/shared/server/http/result"
 	"fmt"
+
+	"github.ssibrahimbas/mArchitecture/shared/auth/token"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/jwt"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/result"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -28,7 +29,7 @@ func New(cnf *Config) fiber.Handler {
 		res, err := cnf.TokenSrv.Parse(t)
 		if err != nil || res == nil {
 			fmt.Printf("Error: %v", err)
-			//l, a := cnf.I18n.GetLanguagesInContext(c)
+			// l, a := cnf.I18n.GetLanguagesInContext(c)
 			return result.Error(err.Error(), fiber.StatusUnauthorized) // cnf.I18n.Translate(cnf.MsgKey, l, a)
 		}
 		c.Locals("user", res)

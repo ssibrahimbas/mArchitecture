@@ -1,7 +1,7 @@
 package example
 
 import (
-	"clean-boilerplate/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.com/pkg/errors"
 )

@@ -1,8 +1,8 @@
 package memory
 
 import (
-	memory_example "clean-boilerplate/boilerplate/src/adapters/memory/example"
-	"clean-boilerplate/boilerplate/src/domain/example"
+	memory_example "github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/memory/example"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 )
 
 type Memory interface {

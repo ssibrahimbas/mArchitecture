@@ -1,13 +1,15 @@
 package http
 
 import (
-	"clean-boilerplate/boilerplate/src/app"
-	"clean-boilerplate/boilerplate/src/delivery/http/mapper"
-	"clean-boilerplate/shared/i18n"
-	"clean-boilerplate/shared/server/http/parser"
-	"clean-boilerplate/shared/validator"
 	"context"
 	"time"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/parser"
+	"github.ssibrahimbas/mArchitecture/shared/validator"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/http/mapper"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/timeout"

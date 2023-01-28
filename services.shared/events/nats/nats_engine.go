@@ -1,7 +1,7 @@
 package nats
 
 import (
-	"clean-boilerplate/shared/events"
+	"github.ssibrahimbas/mArchitecture/shared/events"
 
 	"github.com/nats-io/nats.go"
 )

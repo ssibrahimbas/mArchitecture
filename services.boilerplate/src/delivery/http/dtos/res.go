@@ -1,6 +1,6 @@
 package dtos
 
-import "clean-boilerplate/boilerplate/src/domain/example"
+import "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 type CreateExampleResponse struct {
 	Field   string `json:"field"`

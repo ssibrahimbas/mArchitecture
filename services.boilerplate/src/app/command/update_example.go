@@ -1,11 +1,13 @@
 package command
 
 import (
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/shared/decorator"
-	"clean-boilerplate/shared/events"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/decorator"
+	"github.ssibrahimbas/mArchitecture/shared/events"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/sirupsen/logrus"
 )

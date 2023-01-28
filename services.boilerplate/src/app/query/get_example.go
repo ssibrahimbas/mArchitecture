@@ -1,9 +1,11 @@
 package query
 
 import (
-	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/shared/decorator"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/decorator"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/sirupsen/logrus"
 )

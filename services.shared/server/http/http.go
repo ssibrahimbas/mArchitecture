@@ -3,12 +3,14 @@ package http
 import (
 	"fmt"
 
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/error_handler"
+
 	"github.com/goccy/go-json"
 
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/shared/i18n"
-	"clean-boilerplate/shared/server/http/error_handler"
-	i18nHttp "clean-boilerplate/shared/server/http/i18n"
+	i18nHttp "github.ssibrahimbas/mArchitecture/shared/server/http/i18n"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -34,7 +36,7 @@ func RunServerOnAddr(addr string, cfg Config) {
 	app := fiber.New(fiber.Config{
 		Prefork: true,
 		ErrorHandler: error_handler.New(error_handler.Config{
-			//DfMsgKey: "error_internal_server_error",
+			// DfMsgKey: "error_internal_server_error",
 			I18n: cfg.I18n,
 		}),
 		JSONEncoder: json.Marshal,
@@ -49,7 +51,6 @@ func RunServerOnAddr(addr string, cfg Config) {
 	if err := app.Listen(addr); err != nil {
 		logrus.WithError(err).Panic("Unable to start HTTP server")
 	}
-
 }
 
 func setGlobalMiddlewares(router fiber.Router, cfg Config) {

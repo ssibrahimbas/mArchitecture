@@ -1,7 +1,7 @@
 package entity
 
 import (
-	mysql_migration "clean-boilerplate/shared/migration/mysql"
+	mysql_migration "github.ssibrahimbas/mArchitecture/shared/migration/mysql"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -1,9 +1,11 @@
 package memory_example
 
 import (
-	"clean-boilerplate/boilerplate/src/domain/example"
-	"clean-boilerplate/shared/i18n"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/google/uuid"
 )
@@ -14,6 +16,7 @@ func (r *exampleRepo) Create(ctx context.Context, example *example.Example) *i18
 	r.examples[id] = *example
 	return nil
 }
+
 func (r *exampleRepo) Update(ctx context.Context, example *example.Example) *i18n.I18nError {
 	r.examples[example.UUID] = *example
 	return nil

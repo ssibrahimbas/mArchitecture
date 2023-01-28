@@ -3,8 +3,8 @@
 package mocks
 
 import (
-	example "clean-boilerplate/boilerplate/src/domain/example"
-	i18n "clean-boilerplate/shared/i18n"
+	example "github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
+	i18n "github.ssibrahimbas/mArchitecture/shared/i18n"
 	context "context"
 
 	mock "github.com/stretchr/testify/mock"

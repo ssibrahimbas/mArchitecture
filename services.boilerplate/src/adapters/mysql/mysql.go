@@ -1,8 +1,8 @@
 package mysql
 
 import (
-	mysql_example "clean-boilerplate/boilerplate/src/adapters/mysql/example"
-	"clean-boilerplate/boilerplate/src/domain/example"
+	mysql_example "github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/mysql/example"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/jmoiron/sqlx"
 )

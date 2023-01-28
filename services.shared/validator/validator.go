@@ -1,9 +1,10 @@
 package validator
 
 import (
-	"clean-boilerplate/shared/i18n"
 	"reflect"
 	"strings"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 
 	"github.com/go-playground/validator"
 )

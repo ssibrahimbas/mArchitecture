@@ -1,9 +1,10 @@
 package example
 
 import (
-	"clean-boilerplate/shared/i18n"
 	"reflect"
 	"testing"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
 func TestNewFactory(t *testing.T) {
@@ -255,7 +256,9 @@ func TestFactory_NewExample(t *testing.T) {
 			},
 			want:  nil,
 			want1: i18n.NewError("error_example_field_too_short", i18n.P{"Param": 1}),
-		}, {name: "invalid example with too long field",
+		},
+		{
+			name: "invalid example with too long field",
 			fields: fields{
 				fc: FactoryConfig{
 					MinFieldLength:   1,
@@ -378,7 +381,8 @@ func TestFactory_Unmarshal(t *testing.T) {
 			want:  nil,
 			want1: i18n.NewError("error_example_field_too_short", i18n.P{"Param": 1}),
 		},
-		{name: "invalid example with too long field",
+		{
+			name: "invalid example with too long field",
 			fields: fields{
 				fc: FactoryConfig{
 					MinFieldLength:   1,

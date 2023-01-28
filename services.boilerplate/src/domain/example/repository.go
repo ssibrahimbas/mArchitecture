@@ -1,8 +1,9 @@
 package example
 
 import (
-	"clean-boilerplate/shared/i18n"
 	"context"
+
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
 )
 
 type Repository interface {

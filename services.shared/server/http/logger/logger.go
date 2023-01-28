@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"clean-boilerplate/shared/formats"
+	"github.ssibrahimbas/mArchitecture/shared/formats"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

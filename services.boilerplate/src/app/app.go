@@ -1,8 +1,8 @@
 package app
 
 import (
-	"clean-boilerplate/boilerplate/src/app/command"
-	"clean-boilerplate/boilerplate/src/app/query"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/command"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/query"
 )
 
 type Application struct {

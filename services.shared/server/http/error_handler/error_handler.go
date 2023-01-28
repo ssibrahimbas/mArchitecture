@@ -1,9 +1,9 @@
 package error_handler
 
 import (
-	"clean-boilerplate/shared/i18n"
-	i18nHttp "clean-boilerplate/shared/server/http/i18n"
-	"clean-boilerplate/shared/server/http/result"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	i18nHttp "github.ssibrahimbas/mArchitecture/shared/server/http/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/result"
 
 	"github.com/gofiber/fiber/v2"
 )

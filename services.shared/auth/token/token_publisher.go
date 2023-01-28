@@ -1,6 +1,6 @@
 package token
 
-import "clean-boilerplate/shared/events"
+import "github.ssibrahimbas/mArchitecture/shared/events"
 
 type Publisher interface{}
 

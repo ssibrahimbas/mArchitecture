@@ -1,10 +1,11 @@
 package mysql_example
 
 import (
-	"clean-boilerplate/boilerplate/src/adapters/mysql/example/entity"
-	"clean-boilerplate/boilerplate/src/config"
-	"clean-boilerplate/boilerplate/src/domain/example"
-	mysql_migration "clean-boilerplate/shared/migration/mysql"
+	mysql_migration "github.ssibrahimbas/mArchitecture/shared/migration/mysql"
+
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/adapters/mysql/example/entity"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/config"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 
 	"github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"

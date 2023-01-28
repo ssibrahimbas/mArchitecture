@@ -1,10 +1,10 @@
 package example_mapper
 
 import (
-	"clean-boilerplate/boilerplate/src/app/command"
-	"clean-boilerplate/boilerplate/src/app/query"
-	"clean-boilerplate/boilerplate/src/delivery/http/dtos"
-	"clean-boilerplate/boilerplate/src/domain/example"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/command"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/app/query"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/delivery/http/dtos"
+	"github.ssibrahimbas/mArchitecture/boilerplate/src/domain/example"
 )
 
 type Mapper interface {

@@ -1,10 +1,10 @@
 package parser
 
 import (
-	"clean-boilerplate/shared/i18n"
-	i18nHttp "clean-boilerplate/shared/server/http/i18n"
-	"clean-boilerplate/shared/server/http/result"
-	"clean-boilerplate/shared/validator"
+	"github.ssibrahimbas/mArchitecture/shared/i18n"
+	i18nHttp "github.ssibrahimbas/mArchitecture/shared/server/http/i18n"
+	"github.ssibrahimbas/mArchitecture/shared/server/http/result"
+	"github.ssibrahimbas/mArchitecture/shared/validator"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -45,7 +45,6 @@ func GetToken(c *fiber.Ctx) string {
 		t = getTokenFromBearer(c)
 	}
 	return t
-
 }
 
 func getTokenFromCookie(c *fiber.Ctx) string {
@@ -58,5 +57,4 @@ func getTokenFromBearer(c *fiber.Ctx) string {
 		return ""
 	}
 	return b[7:]
-
 }
