@@ -2,10 +2,18 @@ package user
 
 import "github.ssibrahimbas/mArchitecture/shared/i18n"
 
-type Factory struct{}
+type Factory struct {
+	Errors Errors
+}
 
 func NewFactory() Factory {
-	return Factory{}
+	return Factory{
+		Errors: newUserErrors(),
+	}
+}
+
+func (f Factory) IsZero() bool {
+	return f.Errors == nil || f.Errors.NotFound("") == nil
 }
 
 func (f Factory) NewUser(email string) *User {
