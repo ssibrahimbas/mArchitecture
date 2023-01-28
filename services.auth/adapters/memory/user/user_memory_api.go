@@ -19,7 +19,7 @@ func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
 	return nil
 }
 
-func (r *repo) Get(ctx context.Context, email string) (*user.User, *i18n.I18nError) {
+func (r *repo) GetByEmail(ctx context.Context, email string) (*user.User, *i18n.I18nError) {
 	for _, u := range r.users {
 		if u.Email == email {
 			return &u, nil

@@ -10,7 +10,7 @@ type Errors interface {
 
 type userErrors struct{}
 
-func newUserErrors() *userErrors {
+func newUserErrors() Errors {
 	return &userErrors{}
 }
 

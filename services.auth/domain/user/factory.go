@@ -13,7 +13,7 @@ func NewFactory() Factory {
 }
 
 func (f Factory) IsZero() bool {
-	return f.Errors == nil || f.Errors.NotFound("") == nil
+	return f.Errors == nil
 }
 
 func (f Factory) NewUser(email string) *User {

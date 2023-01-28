@@ -22,6 +22,7 @@ func (r *repo) Create(ctx context.Context, user *user.User) *i18n.I18nError {
 	query := sqb_go.QB.Table(entity.Fields.Table).Insert(&sqb_go.M{
 		entity.Fields.UUID:      user.UUID,
 		entity.Fields.Email:     user.Email,
+		entity.Fields.Password:  user.Password,
 		entity.Fields.IsActive:  true,
 		entity.Fields.CreatedAt: t,
 		entity.Fields.UpdatedAt: t,
@@ -39,7 +40,6 @@ func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
 		return e
 	}
 	query := sqb_go.QB.Table(entity.Fields.Table).Where(entity.Fields.UUID, "=", user.UUID).Update(&sqb_go.M{
-		entity.Fields.Email:     user.Email,
 		entity.Fields.IsActive:  user.IsActive,
 		entity.Fields.UpdatedAt: time.Now().Format(formats.DateYYYYMMDDHHMMSS),
 	})
@@ -50,7 +50,7 @@ func (r *repo) Update(ctx context.Context, user *user.User) *i18n.I18nError {
 	return nil
 }
 
-func (r *repo) Get(ctx context.Context, email string) (*user.User, *i18n.I18nError) {
+func (r *repo) GetByEmail(ctx context.Context, email string) (*user.User, *i18n.I18nError) {
 	e := &entity.MySQLUser{}
 	query := sqb_go.QB.Table(entity.Fields.Table).Where(entity.Fields.Email, "=", email).Get()
 	err := r.db.GetContext(ctx, e, query)
