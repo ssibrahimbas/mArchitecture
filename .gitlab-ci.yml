@@ -17,7 +17,7 @@ lint-all:
   image: golang:1.19-alpine
   script:
     - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-    - golangci-lint run ./services.boilerplate/... ./services.shared/... --timeout 5m
+    - golangci-lint run ./services.boilerplate/... ./services.shared/... ./services.auth/... --timeout 5m
   artifacts:
     when: always
 
@@ -26,7 +26,7 @@ test-all:
   image: golang:1.19-alpine
   script:
     - go install gotest.tools/gotestsum@latest
-    - gotestsum --junitfile report.xml --format testname ./services.boilerplate/... ./services.shared/...
+    - gotestsum --junitfile report.xml --format testname ./services.boilerplate/... ./services.shared/... ./services.auth/...
   artifacts:
     when: always
     reports:

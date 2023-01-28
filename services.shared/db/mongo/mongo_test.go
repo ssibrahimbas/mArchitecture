@@ -1,20 +1,13 @@
 package mongo
 
 import (
-	"context"
 	"reflect"
 	"testing"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func TestDB_TransformId(t *testing.T) {
-	type fields struct {
-		c   *mongo.Client
-		db  *mongo.Database
-		ctx context.Context
-	}
 	type args struct {
 		id string
 	}
