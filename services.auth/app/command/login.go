@@ -17,7 +17,11 @@ type LoginCommand struct {
 	Password string
 }
 
-type LoginHandler decorator.CommandHandler[LoginCommand, *user.User]
+type LoginResult struct {
+	User *user.User
+}
+
+type LoginHandler decorator.CommandHandler[LoginCommand, *LoginResult]
 
 type loginHandler struct {
 	userRepo   user.Repository
@@ -36,7 +40,7 @@ type LoginHandlerConfig struct {
 }
 
 func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
-	return decorator.ApplyCommandDecorators[LoginCommand, *user.User](
+	return decorator.ApplyCommandDecorators[LoginCommand, *LoginResult](
 		loginHandler{
 			userRepo:   config.UserRepo,
 			authTopics: config.AuthTopics,
@@ -48,7 +52,7 @@ func NewLoginHandler(config LoginHandlerConfig) LoginHandler {
 	)
 }
 
-func (h loginHandler) Handle(ctx context.Context, command LoginCommand) (*user.User, *i18n.I18nError) {
+func (h loginHandler) Handle(ctx context.Context, command LoginCommand) (*LoginResult, *i18n.I18nError) {
 	user, err := h.userRepo.GetByEmail(ctx, command.Email)
 	if err != nil {
 		return nil, err
@@ -58,5 +62,7 @@ func (h loginHandler) Handle(ctx context.Context, command LoginCommand) (*user.U
 		return nil, h.errors.InvalidPassword()
 	}
 	_ = h.publisher.Publish(h.authTopics.LoggedIn, user)
-	return nil, err
+	return &LoginResult{
+		User: user,
+	}, err
 }

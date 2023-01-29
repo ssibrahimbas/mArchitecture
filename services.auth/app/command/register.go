@@ -17,7 +17,11 @@ type RegisterCommand struct {
 	Password string
 }
 
-type RegisterHandler decorator.CommandHandler[RegisterCommand, *user.User]
+type RegisterResult struct {
+	User *user.User
+}
+
+type RegisterHandler decorator.CommandHandler[RegisterCommand, *RegisterResult]
 
 type registerHandler struct {
 	userRepo   user.Repository
@@ -36,7 +40,7 @@ type RegisterHandlerConfig struct {
 }
 
 func NewRegisterHandler(config RegisterHandlerConfig) RegisterHandler {
-	return decorator.ApplyCommandDecorators[RegisterCommand, *user.User](
+	return decorator.ApplyCommandDecorators[RegisterCommand, *RegisterResult](
 		registerHandler{
 			userRepo:   config.UserRepo,
 			authTopics: config.AuthTopics,
@@ -48,7 +52,7 @@ func NewRegisterHandler(config RegisterHandlerConfig) RegisterHandler {
 	)
 }
 
-func (h registerHandler) Handle(ctx context.Context, command RegisterCommand) (*user.User, *i18n.I18nError) {
+func (h registerHandler) Handle(ctx context.Context, command RegisterCommand) (*RegisterResult, *i18n.I18nError) {
 	already, err := h.userRepo.GetByEmail(ctx, command.Email)
 	if err != nil {
 		return nil, err
@@ -65,5 +69,7 @@ func (h registerHandler) Handle(ctx context.Context, command RegisterCommand) (*
 		return nil, err
 	}
 	_ = h.publisher.Publish(h.authTopics.Registered, user)
-	return user, err
+	return &RegisterResult{
+		User: user,
+	}, err
 }
