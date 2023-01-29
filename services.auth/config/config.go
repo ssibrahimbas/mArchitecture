@@ -39,9 +39,10 @@ type Topics struct {
 }
 
 type AuthTopics struct {
-	Registered  string `env:"STREAMING_TOPIC_AUTH_REGISTERED"`
-	LoggedIn    string `env:"STREAMING_TOPIC_AUTH_LOGGED_IN"`
-	LoginFailed string `env:"STREAMING_TOPIC_AUTH_LOGIN_FAILED"`
+	Registered    string `env:"STREAMING_TOPIC_AUTH_REGISTERED"`
+	LoggedIn      string `env:"STREAMING_TOPIC_AUTH_LOGGED_IN"`
+	LoginFailed   string `env:"STREAMING_TOPIC_AUTH_LOGIN_FAILED"`
+	TokenExtended string `env:"STREAMING_TOPIC_AUTH_TOKEN_EXTENDED"`
 }
 
 type Nats struct {
