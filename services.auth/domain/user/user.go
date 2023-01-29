@@ -1,8 +1,11 @@
 package user
 
+import "github.ssibrahimbas/mArchitecture/shared/jwt"
+
 type User struct {
 	UUID      string
 	Email     string
+	Roles     []string
 	Password  []byte
 	IsActive  bool
 	CreatedAt string
@@ -15,4 +18,13 @@ func (u *User) SetPassword(password []byte) {
 
 func (u *User) CleanPassword() {
 	u.Password = nil
+}
+
+func (u *User) ToJwtClaims() *jwt.UserClaim {
+	return &jwt.UserClaim{
+		UUID:      u.UUID,
+		Email:     u.Email,
+		Roles:     u.Roles,
+		ExpiresIn: 3600,
+	}
 }

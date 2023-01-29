@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.ssibrahimbas/mArchitecture/auth/config"
 	"github.ssibrahimbas/mArchitecture/auth/domain/user"
+	"github.ssibrahimbas/mArchitecture/shared/auth/token"
 	"github.ssibrahimbas/mArchitecture/shared/cipher"
 	"github.ssibrahimbas/mArchitecture/shared/decorator"
 	"github.ssibrahimbas/mArchitecture/shared/events"
@@ -18,7 +19,7 @@ type RegisterCommand struct {
 }
 
 type RegisterResult struct {
-	User *user.User
+	Token string
 }
 
 type RegisterHandler decorator.CommandHandler[RegisterCommand, *RegisterResult]
@@ -28,12 +29,14 @@ type registerHandler struct {
 	authTopics config.AuthTopics
 	publisher  events.Publisher
 	errors     user.Errors
+	tokenSrv   token.Service
 }
 
 type RegisterHandlerConfig struct {
 	UserRepo      user.Repository
 	AuthTopics    config.AuthTopics
 	Publisher     events.Publisher
+	TokenSrv      token.Service
 	Logger        *logrus.Entry
 	MetricsClient decorator.MetricsClient
 	Errors        user.Errors
@@ -46,6 +49,7 @@ func NewRegisterHandler(config RegisterHandlerConfig) RegisterHandler {
 			authTopics: config.AuthTopics,
 			publisher:  config.Publisher,
 			errors:     config.Errors,
+			tokenSrv:   config.TokenSrv,
 		},
 		config.Logger,
 		config.MetricsClient,
@@ -68,8 +72,12 @@ func (h registerHandler) Handle(ctx context.Context, command RegisterCommand) (*
 	if err != nil {
 		return nil, err
 	}
+	tkn, error := h.tokenSrv.Generate(user.ToJwtClaims())
+	if error != nil {
+		return nil, h.errors.Failed("token")
+	}
 	_ = h.publisher.Publish(h.authTopics.Registered, user)
 	return &RegisterResult{
-		User: user,
+		Token: tkn,
 	}, err
 }

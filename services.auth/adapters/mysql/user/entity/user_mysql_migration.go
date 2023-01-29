@@ -20,6 +20,7 @@ func (m *migration) Up(db *sqlx.DB) error {
         uuid VARCHAR(255) NOT NULL PRIMARY KEY,
 		password VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
+		roles TEXT NOT NULL,
         is_active BOOLEAN NOT NULL,
         created_at DATETIME NOT NULL,
         updated_at DATETIME NOT NULL

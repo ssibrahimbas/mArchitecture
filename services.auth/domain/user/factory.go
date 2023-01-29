@@ -27,6 +27,7 @@ func (f Factory) NewUser(email string, password []byte) *User {
 		UUID:      "",
 		Email:     email,
 		Password:  password,
+		Roles:     []string{"user"},
 		IsActive:  true,
 		CreatedAt: t,
 		UpdatedAt: t,

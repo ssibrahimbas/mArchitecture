@@ -1,10 +1,15 @@
 package entity
 
-import "github.ssibrahimbas/mArchitecture/auth/domain/user"
+import (
+	"strings"
+
+	"github.ssibrahimbas/mArchitecture/auth/domain/user"
+)
 
 type MySQLUser struct {
 	UUID      string `db:"uuid"`
 	Email     string `db:"email"`
+	Roles     string `db:"roles"`
 	Password  []byte `db:"password"`
 	IsActive  bool   `db:"is_active"`
 	CreatedAt string `db:"created_at"`
@@ -14,6 +19,7 @@ type MySQLUser struct {
 type fields struct {
 	UUID      string
 	Email     string
+	Roles     string
 	Password  string
 	IsActive  string
 	CreatedAt string
@@ -25,6 +31,7 @@ type fields struct {
 var Fields = fields{
 	UUID:      "uuid",
 	Password:  "password",
+	Roles:     "roles",
 	Email:     "email",
 	IsActive:  "is_active",
 	CreatedAt: "created_at",
@@ -37,6 +44,7 @@ func (m *MySQLUser) ToUser() *user.User {
 		UUID:     m.UUID,
 		Email:    m.Email,
 		Password: m.Password,
+		Roles:    strings.Split(m.Roles, ","),
 		IsActive: m.IsActive,
 	}
 }
