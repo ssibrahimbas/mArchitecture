@@ -1,9 +1,3 @@
-#  Mix Architecture
+#  This repo migrated to [Mix Architecture](https://github.com/mixarchitecture) organization.
 
-This is an advanced microservice architecture that combines many useful patterns and architectures.
-
-##  Architecture
-
-The architecture is based on the following patterns:
-
-When it completed, the documentation will be updated.
+[Click to go live repo.](https://github.com/mixarchitecture/arch)
